@@ -1,0 +1,154 @@
+"""小红书多账号图文发布（本地运行，浏览器可见）。
+
+每个账号一个独立浏览器配置目录 accounts/<账号>/，首次扫码登录后长期复用。
+
+用法:
+    python -m xhs.publish login 账号A                 # 打开浏览器扫码登录，登录后关闭窗口即可
+    python -m xhs.publish post posts/example          # 发布单篇（账号取 post.json 的 account）
+    python -m xhs.publish post posts/example --auto   # 自动点击“发布”（默认填好后等你人工确认）
+    python -m xhs.publish run                         # 按队列发布 posts/ 下所有未发布的帖子
+
+帖子目录结构:
+    posts/<帖子>/post.json   {"account": "账号A", "title": "...", "body": "...", "tags": ["穿搭"]}
+    posts/<帖子>/1.png 2.png ...   # Figma 导出的图片，按文件名顺序上传(最多 18 张)
+"""
+import argparse
+import json
+import random
+import time
+from datetime import datetime
+from pathlib import Path
+
+from playwright.sync_api import Page, sync_playwright
+
+ROOT = Path(__file__).resolve().parent.parent
+ACCOUNTS = ROOT / "accounts"
+POSTS = ROOT / "posts"
+PUBLISH_URL = "https://creator.xiaohongshu.com/publish/publish?source=official"
+LOGIN_URL = "https://creator.xiaohongshu.com/login"
+IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
+TITLE_MAX = 20
+BODY_MAX = 1000
+
+
+def human_pause(lo=0.8, hi=2.0):
+    time.sleep(random.uniform(lo, hi))
+
+
+def open_context(pw, account: str):
+    profile = ACCOUNTS / account
+    profile.mkdir(parents=True, exist_ok=True)
+    return pw.chromium.launch_persistent_context(
+        str(profile), headless=False, viewport={"width": 1400, "height": 900}, locale="zh-CN")
+
+
+def login(account: str):
+    with sync_playwright() as pw:
+        ctx = open_context(pw, account)
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
+        page.goto(LOGIN_URL)
+        print(f"[{account}] 请在浏览器里扫码登录，进入创作者中心后关闭浏览器窗口。")
+        page.wait_for_event("close", timeout=0)
+        ctx.close()
+
+
+def load_post(post_dir: Path) -> dict:
+    meta = json.loads((post_dir / "post.json").read_text("utf-8"))
+    images = sorted(p for p in post_dir.iterdir() if p.suffix.lower() in IMAGE_EXTS)
+    if not images:
+        raise SystemExit(f"{post_dir} 里没有图片")
+    if len(meta["title"]) > TITLE_MAX:
+        raise SystemExit(f"标题超过 {TITLE_MAX} 字: {meta['title']}")
+    meta["images"] = images[:18]
+    return meta
+
+
+def fill_post(page: Page, meta: dict):
+    page.goto(PUBLISH_URL)
+    page.wait_for_load_state("networkidle")
+    if "login" in page.url:
+        raise RuntimeError("未登录或登录已过期，请先运行 login")
+
+    page.get_by_text("上传图文", exact=True).first.click()
+    human_pause()
+    page.locator("input[type=file]").first.set_input_files([str(p) for p in meta["images"]])
+    # 等待上传完成：标题输入框出现
+    title = page.locator("input[placeholder*='标题']").first
+    title.wait_for(timeout=120_000)
+    human_pause()
+    title.fill(meta["title"])
+    human_pause()
+
+    editor = page.locator("div.tiptap.ProseMirror, div.ql-editor, #post-textarea").first
+    editor.click()
+    body = meta.get("body", "")[:BODY_MAX]
+    page.keyboard.type(body, delay=random.randint(20, 60))
+    for tag in meta.get("tags", []):
+        page.keyboard.type(f" #{tag}", delay=60)
+        human_pause(1.2, 2.0)
+        page.keyboard.press("Enter")  # 选中话题联想的第一项，使其成为真正的话题
+    human_pause()
+
+
+def publish_post(post_dir: Path, account: str | None, auto: bool) -> bool:
+    meta = load_post(post_dir)
+    account = account or meta.get("account")
+    if not account:
+        raise SystemExit("请在 post.json 里写 account，或用 --account 指定")
+
+    with sync_playwright() as pw:
+        ctx = open_context(pw, account)
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
+        fill_post(page, meta)
+        if auto:
+            page.get_by_role("button", name="发布").last.click()
+            page.wait_for_timeout(5000)
+            ok = "success" in page.url or page.get_by_text("发布成功").count() > 0
+        else:
+            input(f"[{account}] 已填好《{meta['title']}》，请在浏览器检查并手动点“发布”，完成后按回车...")
+            ok = True
+        ctx.close()
+
+    if ok:
+        (post_dir / "published.json").write_text(json.dumps(
+            {"account": account, "at": datetime.now().isoformat(timespec="seconds")},
+            ensure_ascii=False), "utf-8")
+        print(f"[{account}] 已发布: {meta['title']}")
+    else:
+        print(f"[{account}] 发布状态未确认，请到创作者中心检查: {meta['title']}")
+    return ok
+
+
+def run_queue(auto: bool, gap_min: int, gap_max: int):
+    pending = [d for d in sorted(POSTS.iterdir())
+               if (d / "post.json").exists() and not (d / "published.json").exists()]
+    print(f"待发布 {len(pending)} 篇")
+    for i, d in enumerate(pending):
+        publish_post(d, None, auto)
+        if i < len(pending) - 1:
+            wait = random.randint(gap_min, gap_max)
+            print(f"间隔 {wait // 60} 分钟后发下一篇...")
+            time.sleep(wait)
+
+
+def main():
+    ap = argparse.ArgumentParser(description="小红书多账号发布")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    s = sub.add_parser("login"); s.add_argument("account")
+    s = sub.add_parser("post"); s.add_argument("post_dir", type=Path)
+    s.add_argument("--account"); s.add_argument("--auto", action="store_true")
+    s = sub.add_parser("run"); s.add_argument("--auto", action="store_true")
+    s.add_argument("--gap-min", type=int, default=20 * 60, help="两篇之间最短间隔(秒)")
+    s.add_argument("--gap-max", type=int, default=60 * 60, help="两篇之间最长间隔(秒)")
+    a = ap.parse_args()
+
+    if a.cmd == "login":
+        login(a.account)
+    elif a.cmd == "post":
+        publish_post(a.post_dir, a.account, a.auto)
+    else:
+        run_queue(a.auto, a.gap_min, a.gap_max)
+
+
+if __name__ == "__main__":
+    main()
