@@ -14,8 +14,10 @@ PHOTO = "https://cdn.klaviyomail.com/company/RLiMzU/images/6bc3749b-e3ac-4578-ad
 BAND = "https://cdn.klaviyomail.com/company/RLiMzU/images/9ab928b8-7b72-4281-92cf-8c1b9cb19010.jpeg"
 HELPER = "https://cdn.klaviyomail.com/company/RLiMzU/images/d986a5b7-bd54-4cba-965f-6c3d205ced5b.png"
 INSTAGRAM = "https://cdn.klaviyomail.com/company/RLiMzU/images/50e6aefb-d99f-424f-8c97-2724fa1f0f90.png"
-# New asset: upload assets/walker.png to Klaviyo and paste its URL here
+# New assets: upload assets/walker.png, bottle-5oz.png, bottle-8oz.png to Klaviyo and paste their URLs here
 WALKER = "assets/walker.png"
+BOTTLE_5 = "assets/bottle-5oz.png"
+BOTTLE_8 = "assets/bottle-8oz.png"
 
 PRODUCT_URL = "https://ronini.com/products/the-ronini-wrapped-glass-bottle"
 DISCOUNT_URL = "https://ronini.com/discount/{% coupon_code 'EARLY15' %}?redirect=%2Fproducts%2Fthe-ronini-wrapped-glass-bottle"
@@ -58,7 +60,7 @@ def button(label, url, bg, fg, full=False, border=None):
 
 
 def coupon_card():
-    # Light ticket-style card, centered: 15% badge, title, offer, dashed code slot, terms.
+    # Light ticket-style card, centered: arch + pill offer mark (brand shapes), title, offer, dashed code slot, terms.
     return f'''
   <!-- ============ WAITLIST THANK-YOU (waitlist only) ============ -->
   <tr>
@@ -67,7 +69,16 @@ def coupon_card():
         <tr>
           <td class="card" align="center" style="padding:28px 28px 26px 28px;text-align:center;">
             <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;border-collapse:separate;"><tr>
-              <td align="center" valign="middle" width="64" height="64" bgcolor="{ORANGE}" style="width:64px;height:64px;background:{ORANGE};border-radius:999px;{H}font-size:18px;line-height:20px;color:{PAPER};text-align:center;">15%</td>
+              <td align="center" valign="middle" width="88" height="100" bgcolor="{ORANGE}" style="width:88px;height:100px;background:{ORANGE};border-radius:44px 44px 8px 8px;text-align:center;">
+                <p style="padding-top:14px;{H}font-size:28px;line-height:30px;letter-spacing:-0.6px;color:{PAPER};text-align:center;">15%</p>
+                <p style="{B}font-weight:600;font-size:13px;line-height:16px;color:{PAPER};text-align:center;">off</p>
+              </td>
+              <td width="8" style="width:8px;font-size:0;line-height:0;">&nbsp;</td>
+              <td align="center" valign="top" width="28" height="100" bgcolor="{PERI}" style="width:28px;height:100px;background:{PERI};border-radius:6px 6px 14px 14px;">
+                <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:16px auto 0 auto;border-collapse:separate;"><tr>
+                  <td width="12" height="12" bgcolor="{NAVY}" style="width:12px;height:12px;background:{NAVY};border-radius:999px;font-size:0;line-height:0;">&nbsp;</td>
+                </tr></table>
+              </td>
             </tr></table>
             <p style="padding-top:14px;{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{PERI};text-align:center;">For the waitlist</p>
             <h3 style="padding-top:6px;{H}font-size:22px;line-height:28px;color:{NAVY};text-align:center;">Your waitlist thank-you</h3>
@@ -85,15 +96,25 @@ def coupon_card():
   </tr>'''
 
 
-def arch_card(oz, ml, price, pad_side):
+def arch_card(oz, ml, price, pad_side, bottle, bh):
+    # Paper arch with the bottle in a pale "window" beside size + price.
+    wh = 138  # same window height for both sizes so the cards line up
     return f'''<td width="50%" valign="top" style="padding-{pad_side}:8px;">
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{ORANGE}" style="background-color:{ORANGE};background-image:linear-gradient(180deg,{ORANGE} 0%,#F4652F 55%,#F9B79E 100%);border:2px solid {NAVY};border-radius:118px 118px 18px 18px;border-collapse:separate;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAPER}" style="background:{PAPER};border:2px solid {NAVY};border-radius:118px 118px 18px 18px;border-collapse:separate;">
                     <tr>
-                      <td align="center" style="padding:56px 16px 28px 16px;">
-                        <p style="{H}font-size:20px;line-height:24px;color:{NAVY};">{oz}</p>
-                        <p style="margin-top:2px;{B}font-size:14px;line-height:18px;color:{PAPER};">{ml}</p>
-                        <p style="margin-top:18px;{H}font-size:42px;line-height:44px;letter-spacing:-1.2px;color:{NAVY};">{price}</p>
-                        <p style="margin-top:2px;{B}font-weight:600;font-size:13px;line-height:18px;color:{NAVY};">per pair</p>
+                      <td align="center" style="padding:50px 12px 26px 12px;">
+                        <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;border-collapse:separate;"><tr>
+                          <td align="center" valign="middle" width="72" height="{wh}" bgcolor="{SKY}" style="width:72px;height:{wh}px;background-color:{SKY};background-image:linear-gradient(90deg,{SKY} 0%,#F3EEFF 100%);border-radius:36px 36px 10px 10px;">
+                            <img src="{bottle}" width="62" height="{bh}" alt="{oz} Wrapped Glass Bottle" style="width:62px;height:{bh}px;margin:0 auto;"/>
+                          </td>
+                          <td width="12" style="width:12px;font-size:0;line-height:0;">&nbsp;</td>
+                          <td align="center" valign="middle" style="text-align:center;">
+                            <p style="{H}font-size:20px;line-height:24px;color:{NAVY};">{oz}</p>
+                            <p style="margin-top:2px;{B}font-size:14px;line-height:18px;color:{INK};">{ml}</p>
+                            <p class="price" style="margin-top:12px;{H}font-size:40px;line-height:42px;letter-spacing:-1.2px;color:{ORANGE};">{price}</p>
+                            <p style="margin-top:2px;{B}font-weight:600;font-size:13px;line-height:18px;color:{NAVY};white-space:nowrap;">per pair</p>
+                          </td>
+                        </tr></table>
                       </td>
                     </tr>
                   </table>
@@ -138,6 +159,7 @@ a {{color:{NAVY}}}
   .panel {{padding:28px 18px !important}}
   .card {{padding:24px 20px !important}}
   .codef {{font-size:18px !important;line-height:26px !important}}
+  .price {{font-size:30px !important;line-height:34px !important}}
 }}
 </style>
 </head>
@@ -161,7 +183,7 @@ a {{color:{NAVY}}}
     <td class="px" align="center" style="padding:40px 40px 0 40px;text-align:center;">
       <img src="{WALKER}" width="96" height="108" alt="" style="width:96px;height:108px;margin:0 auto;"/>
       <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:18px auto 0 auto;border-collapse:separate;"><tr>
-        <td bgcolor="{NAVY}" style="background:{NAVY};border-radius:999px;padding:6px 14px;{B}font-weight:600;font-size:12px;line-height:14px;letter-spacing:1px;text-transform:uppercase;color:{PAPER};"><span style="color:{ORANGE};">&#9679;</span>&nbsp; Open to everyone</td>
+        <td bgcolor="{PAPER}" style="background:{PAPER};border:1px solid #B9C6F7;border-radius:999px;padding:8px 18px;{B}font-size:15px;line-height:20px;color:{NAVY};">Open to everyone</td>
       </tr></table>
       <h1 class="h1" style="padding-top:18px;{H}font-size:52px;line-height:54px;letter-spacing:-1.6px;color:{NAVY};text-align:center;">Ronini is <span style="color:{ORANGE};">open.</span></h1>
       <p style="padding-top:18px;{B}font-size:16px;line-height:25px;color:{INK};text-align:center;">{v["intro"]}</p>
@@ -186,8 +208,8 @@ a {{color:{NAVY}}}
         <tr>
           <td class="panel" style="padding:32px 32px 32px 32px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-              {arch_card("5 oz", "160 ml", "$60", "right")}
-              {arch_card("8 oz", "240 ml", "$64", "left")}
+              {arch_card("5 oz", "160 ml", "$60", "right", BOTTLE_5, 104)}
+              {arch_card("8 oz", "240 ml", "$64", "left", BOTTLE_8, 124)}
             </tr></table>
             <p style="padding-top:16px;{B}font-size:12px;line-height:18px;color:{NAVY};">{v["price_note"]}</p>
             <div style="padding-top:22px;">{button(v["cta_label"], v["cta_url"], NAVY, "#FFFFFF", full=True)}</div>
