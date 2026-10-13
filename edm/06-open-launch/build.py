@@ -83,7 +83,7 @@ def coupon_card():
               <td width="10" style="width:10px;font-size:0;line-height:0;">&nbsp;</td>
               <td valign="middle" style="{H}font-size:26px;line-height:26px;color:{NAVY};">+</td>
               <td width="8" style="width:8px;font-size:0;line-height:0;">&nbsp;</td>
-              <td valign="middle" width="56"><img src="{TUBE}" width="56" height="103" alt="Free Venting Tube" style="width:56px;height:103px;"/></td>
+              <td valign="middle" width="52"><img src="{TUBE}" width="52" height="103" alt="Free Venting Tube" style="width:52px;height:103px;"/></td>
             </tr></table>
             <p style="padding-top:14px;{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{PERI};text-align:center;">For the waitlist</p>
             <h3 style="padding-top:6px;{H}font-size:22px;line-height:28px;color:{NAVY};text-align:center;">Your waitlist thank-you</h3>
