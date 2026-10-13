@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>ipopi × Flux Digital · 独立站提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800;125,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700;900&display=block" rel="stylesheet">
+<style>
+:root{
+  --ink:#121318; --dark:#121318; --cobalt:#2B45D8; --lav:#DCD8FF; --mist:#DFE2F7;
+  --bg:#E9EAEE; --card:#FFFFFF; --line:#D3D5DD; --muted:#6B6E7B; --green:#1F8A5B;
+  --sans:"Inter","Noto Sans SC",sans-serif; --wide:"Archivo","Noto Sans SC",sans-serif; --mono:"JetBrains Mono","Noto Sans SC",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#888}
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+.slide{width:1600px;height:900px;position:relative;overflow:hidden;background:var(--bg);margin:0 auto 24px;page-break-after:always;break-after:page;padding:0 54px}
+@media print{html,body{background:none}.slide{margin:0}}
+.top{height:52px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font:500 12.5px var(--mono);letter-spacing:.16em;color:#4b4e5a}
+.dark{background:var(--dark);color:#F1F2F6}
+.dark .top{border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+.blue{background:var(--cobalt);color:#fff}
+.blue .top{border-color:rgba(255,255,255,.28);color:rgba(255,255,255,.85)}
+.kicker{font:500 13.5px var(--mono);letter-spacing:.16em;color:var(--cobalt);text-transform:uppercase}
+.dark .kicker{color:#A9B4FF} .blue .kicker{color:#fff}
+h1.big{font:900 76px/1.0 var(--wide);letter-spacing:-.01em;text-transform:uppercase}
+h2{font:700 48px/1.22 var(--sans);letter-spacing:-.01em;margin-top:14px}
+.lead{font-size:17px;line-height:1.75;color:#4b4e5a;margin-top:20px;max-width:620px}
+.dark .lead{color:rgba(241,242,246,.72)}
+.wide{font-family:var(--wide);font-weight:800}
+.mono{font-family:var(--mono)}
+mark{background:var(--lav);color:var(--ink);padding:0 3px}
+.row{display:flex}
+.abs{position:absolute}
+.rows .r{display:grid;grid-template-columns:140px 130px 1fr;gap:10px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.rows .r:last-child{border-bottom:1px solid var(--line)}
+.rows .k{font:500 13px var(--mono);letter-spacing:.14em;color:var(--cobalt)}
+.rows .t{font-weight:700;font-size:18px}
+.rows .d{font-size:16px;color:#4b4e5a;line-height:1.65}
+.card{background:var(--card);padding:26px 28px}
+.lbl{font:500 12.5px var(--mono);letter-spacing:.14em;color:var(--cobalt);text-transform:uppercase}
+.card h4{font-size:24px;font-weight:700;margin:8px 0 4px}
+.card .sub{font-size:14.5px;color:var(--muted)}
+.wf{border:1.5px solid var(--ink);background:#fff;padding:9px;display:flex;flex-direction:column;gap:6px}
+.wf div{background:repeating-linear-gradient(135deg,#ECEDF1 0 8px,#F6F7F9 8px 16px);display:flex;align-items:center;justify-content:center;font:500 10.5px var(--mono);letter-spacing:.1em;color:#555867;text-align:center}
+.wf div span{background:#fff;padding:2px 6px}
+.wf .hl{background:var(--cobalt);color:#fff}
+.wf .hl2{background:var(--ink);color:#fff}
+.wf .hl3{background:var(--lav);color:var(--ink)}
+.wfname{font:800 17px var(--wide);margin-top:14px;text-transform:uppercase}
+.pts .p{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:13px 0;border-top:1px solid var(--line);font-size:16px;line-height:1.55}
+.pts .p:last-child{border-bottom:1px solid var(--line)}
+.pts .p b{font-weight:700}
+.pts .p span{color:#4b4e5a}
+.note{background:var(--lav);padding:16px 20px;font-size:15px;color:#24263a;display:flex;gap:16px;align-items:baseline}
+.note .lbl{white-space:nowrap}
+/* requirement table */
+.rq{width:100%;border-collapse:collapse;margin-top:22px;background:#fff}
+.rq th{font:500 11.5px var(--mono);letter-spacing:.12em;color:var(--cobalt);text-align:left;padding:12px 14px;border-bottom:1.5px solid var(--ink);background:#F6F7F9}
+.rq td{font-size:14px;line-height:1.5;padding:9px 14px;border-bottom:1px solid #E6E7EC;vertical-align:top;color:#33353f}
+.rq td:first-child{font:500 12.5px var(--mono);color:var(--cobalt);width:64px;padding-top:11px}
+.rq td.m{font-weight:700;color:var(--ink);width:150px}
+.rq td.w{width:270px;color:#4b4e5a}
+.rq td.s{width:96px;white-space:nowrap}
+.tg{display:inline-block;font:500 11.5px var(--mono);letter-spacing:.06em;padding:3px 8px}
+.t-in{background:var(--cobalt);color:#fff}
+.t-app{background:var(--lav);color:var(--ink)}
+.t-no{background:#E6E7EC;color:#6b6e7b}
+.legend{display:flex;gap:22px;align-items:center;font-size:13.5px;color:#4b4e5a}
+/* cases */
+.case{position:absolute;width:700px}
+.case .pc{width:640px;height:400px;object-fit:cover;object-position:top;display:block;box-shadow:0 24px 50px rgba(18,19,24,.18)}
+.case .ph{position:absolute;left:520px;top:126px;width:186px;height:384px;border:6px solid #111;border-radius:26px;overflow:hidden;background:#111;box-shadow:0 22px 40px rgba(18,19,24,.28)}
+.case .ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:20px;display:block}
+.case .cap{position:absolute;top:560px;left:0;width:700px;border-top:1.5px solid var(--ink);padding-top:16px;display:flex;align-items:baseline;gap:18px}
+.case .cap b{font:800 23px var(--wide)}
+.case .cap i{font:400 14px var(--mono);font-style:normal;color:#6b6e7b}
+.case .cap em{margin-left:auto;font:500 12.5px var(--mono);font-style:normal;letter-spacing:.12em;color:var(--cobalt)}
+.case .why{position:absolute;top:610px;left:0;width:700px;font-size:15px;color:#4b4e5a;line-height:1.6}
+.grid12{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 24px}
+.grid12 .g img{width:100%;height:206px;object-fit:cover;object-position:top;display:block;border:1px solid var(--line)}
+.grid12 .g .c{display:flex;justify-content:space-between;align-items:baseline;margin-top:9px}
+.grid12 .g b{font-size:16.5px;font-weight:600}
+.grid12 .g i{font:400 12.5px var(--mono);font-style:normal;color:#77798a}
+</style>
+</head>
+<body>
+
+<!-- 01 COVER -->
+<section class="slide dark">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>01 / 20</span></div>
+  <div class="abs" style="left:54px;top:236px;width:800px">
+    <div class="kicker">IPOPI DTC STORE · 独立站策略 · 设计 · 建站 提案</div>
+    <h1 class="big" style="font-size:100px;margin-top:20px">EVERYDAY<br>GOOD.</h1>
+    <p style="font-size:22px;line-height:1.75;margin-top:30px;color:rgba(241,242,246,.85)">把 GoodLife、GoodFresh、GoodMood 放进一个会员制独立站——<br>让顾客<mark>逛得顺</mark>、<mark>付得放心</mark>、<mark>愿意常回来</mark>。</p>
+  </div>
+  <!-- devices -->
+  <div class="abs" style="left:900px;top:190px;width:650px;height:420px">
+    <svg width="650" height="420" viewBox="0 0 650 420" fill="none">
+      <rect x="20" y="60" width="470" height="290" rx="10" stroke="#F1F2F6" stroke-width="2.5" fill="#1C1E26"/>
+      <rect x="20" y="60" width="470" height="26" rx="10" fill="#262934"/>
+      <rect x="44" y="104" width="250" height="110" fill="#2B45D8"/>
+      <rect x="306" y="104" width="160" height="50" fill="#2D303C"/><rect x="306" y="162" width="160" height="52" fill="#2D303C"/>
+      <rect x="44" y="226" width="96" height="100" fill="#2D303C"/><rect x="148" y="226" width="96" height="100" fill="#2D303C"/><rect x="252" y="226" width="96" height="100" fill="#2D303C"/><rect x="356" y="226" width="110" height="100" fill="#2D303C"/>
+      <path d="M200 350l-14 40h138l-14-40" stroke="#F1F2F6" stroke-width="2.5"/>
+      <rect x="440" y="150" width="150" height="250" rx="22" stroke="#F1F2F6" stroke-width="2.5" fill="#1C1E26"/>
+      <rect x="456" y="178" width="118" height="70" fill="#2B45D8"/>
+      <rect x="456" y="256" width="56" height="64" fill="#2D303C"/><rect x="518" y="256" width="56" height="64" fill="#2D303C"/>
+      <rect x="456" y="362" width="118" height="22" fill="#DCD8FF"/>
+      <g stroke="rgba(255,255,255,.4)"><path d="M120 104V20"/><path d="M515 150V20"/><path d="M255 390v26"/></g>
+    </svg>
+    <div class="abs mono" style="left:60px;top:0;font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.6)">PC · 1440</div>
+    <div class="abs mono" style="left:440px;top:0;font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.6)">MOBILE WEB · 390</div>
+    <div class="abs mono" style="left:150px;top:418px;font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.6)">ONE ACCOUNT · ONE CART · ONE MEMBERSHIP</div>
+  </div>
+  <div class="abs" style="left:54px;right:54px;bottom:46px;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;display:grid;grid-template-columns:repeat(6,1fr)">
+    <div><div class="mono" style="font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">CLIENT</div><div style="margin-top:8px;font-size:16px">ipopi</div></div>
+    <div><div class="mono" style="font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">BASED ON</div><div style="margin-top:8px;font-size:16px">产品需求文档 V0.3</div></div>
+    <div><div class="mono" style="font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">SCOPE</div><div style="margin-top:8px;font-size:16px">32 模板 × PC / Mobile</div></div>
+    <div><div class="mono" style="font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">INVESTMENT</div><div style="margin-top:8px;font-size:16px">¥49,800</div></div>
+    <div><div class="mono" style="font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">DATE</div><div style="margin-top:8px;font-size:16px">2026.10.13</div></div>
+    <div><div class="mono" style="font-size:11.5px;letter-spacing:.14em;color:rgba(255,255,255,.5)">PREPARED BY</div><div style="margin-top:8px;font-size:16px">Flux Digital</div></div>
+  </div>
+</section>
+
+<!-- 02 WHAT WE HEARD -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>02 / 20</span></div>
+  <div class="abs" style="left:54px;top:96px;width:660px">
+    <div class="kicker">01 · WHAT WE HEARD</div>
+    <h2>一个独立站，<br>同时是商城、会员中心<br>和服务台。</h2>
+    <p class="lead">我们通读了 ipopi《独立站与 App 产品需求文档 V0.3》：17 个前台模块 + 7 个电脑端布局补充，覆盖浏览、购物车、结算支付、订单物流、售后、会员积分、客服、账号与地址。本提案聚焦<b>独立站（电脑端 + 手机网页）的设计与建站</b>，把它拆成五个交付模块，一次做完。</p>
+  </div>
+  <div class="abs rows" style="left:820px;top:250px;width:726px">
+    <div class="r"><span class="k">STRATEGY</span><span class="t">需求梳理</span><span class="d">PRD 逐条拆解为需求表、信息架构、业务流程与待确认清单。</span></div>
+    <div class="r"><span class="k">DESIGN</span><span class="t">视觉与 UI</span><span class="d">品牌视觉规范 + PC / Mobile 全站约 32 个模板设计稿。</span></div>
+    <div class="r"><span class="k">BUILD</span><span class="t">建站开发</span><span class="d">Shopify 定制主题开发，会员、积分、签到、客服等对接落地。</span></div>
+    <div class="r"><span class="k">QA</span><span class="t">交易验收</span><span class="d">按 PRD 验收场景 A01–A11 逐项测试，金额与状态零误差上线。</span></div>
+    <div class="r"><span class="k">GUIDANCE</span><span class="t">运营交接</span><span class="d">后台培训、操作手册与上线后 60 天售后支持。</span></div>
+  </div>
+</section>
+
+<!-- 03 SCOPE -->
+<section class="slide blue">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>03 / 20</span></div>
+  <div style="margin-top:44px">
+    <div class="kicker">02 · SCOPE · 本次范围</div>
+    <h2 style="color:#fff">先把独立站做扎实，<br>数据底座同时为 App 铺好。</h2>
+  </div>
+  <div class="row" style="gap:18px;margin-top:30px">
+    <div style="flex:1;background:rgba(255,255,255,.12);padding:32px 34px;height:400px">
+      <div class="mono" style="font-size:12.5px;letter-spacing:.16em">IN THIS QUOTE · 本报价包含</div>
+      <div class="pts" style="margin-top:18px">
+        <div class="p" style="border-color:rgba(255,255,255,.28)"><b>电脑端独立站</b><span style="color:#fff">PC01–PC07 全部布局：顶部导航、会员中心侧栏、宽屏结算</span></div>
+        <div class="p" style="border-color:rgba(255,255,255,.28)"><b>手机端网页</b><span style="color:#fff">P01–P17 全部前台模块的移动网页版，单手可操作</span></div>
+        <div class="p" style="border-color:rgba(255,255,255,.28)"><b>运营后台</b><span style="color:#fff">Shopify 后台 + 各 App 后台配置好、教会用</span></div>
+        <div class="p" style="border-color:rgba(255,255,255,.28)"><b>交易验收</b><span style="color:#fff">支付、库存、优惠、售后按 PRD 验收场景测试</span></div>
+      </div>
+    </div>
+    <div style="flex:1;background:var(--dark);padding:32px 34px;height:400px">
+      <div class="mono" style="font-size:12.5px;letter-spacing:.16em;color:#A9B4FF">QUOTED SEPARATELY · 另行报价</div>
+      <div class="pts" style="margin-top:18px">
+        <div class="p" style="border-color:rgba(255,255,255,.14)"><b>iOS / Android App</b><span style="color:rgba(255,255,255,.8)">原生 App 开发、打包与上架审核，单独评估报价</span></div>
+        <div class="p" style="border-color:rgba(255,255,255,.14)"><b>自建管理后台</b><span style="color:rgba(255,255,255,.8)">PRD 第四章的独立后台系统；本次以 Shopify 后台承接</span></div>
+        <div class="p" style="border-color:rgba(255,255,255,.14)"><b>ERP / 仓储对接</b><span style="color:rgba(255,255,255,.8)">确认主数据来源后评估（PRD Q06）</span></div>
+        <div class="p" style="border-color:rgba(255,255,255,.14)"><b>App 预留</b><span style="color:rgba(255,255,255,.8)">商品、账号、订单、会员统一在 Shopify，日后 App 经 Storefront API 直接复用</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 FLOWS -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>04 / 20</span></div>
+  <div style="margin-top:44px">
+    <div class="kicker">03 · KEY FLOWS · 业务闭环</div>
+    <h2>三条闭环，<br>决定一个商城能不能跑起来。</h2>
+  </div>
+  <div class="row" style="gap:20px;margin-top:30px">
+    <div class="card" style="flex:1">
+      <div class="lbl">FLOW A</div><h4>购买闭环</h4><div class="sub">P01–P08 · P13–P14</div>
+      <div style="background:var(--bg);padding:14px 16px;margin:22px 0 18px;font-size:15px;line-height:1.8">首页 / 分类 / 搜索 <span style="color:var(--cobalt)">→</span> 详情选规格 <span style="color:var(--cobalt)">→</span> 购物车 <span style="color:var(--cobalt)">→</span> 确认订单 <span style="color:var(--cobalt)">→</span> 支付 <span style="color:var(--cobalt)">→</span> 物流 <span style="color:var(--cobalt)">→</span> 收货 <span style="color:var(--cobalt)">→</span> 评价</div>
+      <div style="font-size:15px;color:#4b4e5a">重点：库存与价格下单前复核、支付以服务端结果为准。</div>
+    </div>
+    <div class="card" style="flex:1">
+      <div class="lbl">FLOW B</div><h4>售后闭环</h4><div class="sub">P13 · P15</div>
+      <div style="background:var(--bg);padding:14px 16px;margin:22px 0 18px;font-size:15px;line-height:1.8">订单详情 <span style="color:var(--cobalt)">→</span> 选商品 <span style="color:var(--cobalt)">→</span> 类型与原因 <span style="color:var(--cobalt)">→</span> 凭证 <span style="color:var(--cobalt)">→</span> 审核 <span style="color:var(--cobalt)">→</span> 退货 / 退款 <span style="color:var(--cobalt)">→</span> 结果</div>
+      <div style="font-size:15px;color:#4b4e5a">重点：可退金额不超上限，退款走原渠道不重复。</div>
+    </div>
+    <div class="card" style="flex:1">
+      <div class="lbl">FLOW C</div><h4>会员闭环</h4><div class="sub">P10 · P16 · P17</div>
+      <div style="background:var(--bg);padding:14px 16px;margin:22px 0 18px;font-size:15px;line-height:1.8">注册登录 <span style="color:var(--cobalt)">→</span> 会员中心 <span style="color:var(--cobalt)">→</span> 等级与权益 <span style="color:var(--cobalt)">→</span> 签到 / 积分 <span style="color:var(--cobalt)">→</span> 兑换优惠券 <span style="color:var(--cobalt)">→</span> 结算使用</div>
+      <div style="font-size:15px;color:#4b4e5a">重点：签到、兑券幂等，积分扣减与发券同时成功。</div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:20px"><span class="lbl">IA · 信息架构</span><span>手机端底部导航：首页 · 分类 · 会员 · 购物车 · 我的，消息入口在顶部；电脑端改为顶部横向导航 + 个人中心侧栏，不照搬手机底部导航。</span></div>
+</section>
+
+<!-- 05 REQ TABLE 1 -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>05 / 20</span></div>
+  <div class="row" style="margin-top:34px;justify-content:space-between;align-items:flex-end">
+    <div><div class="kicker">04 · REQUIREMENTS · 需求表 1 / 3</div><h2 style="font-size:36px">浏览与交易：P01 – P09</h2></div>
+    <div class="legend"><span><span class="tg t-in">✓ 含</span> 本报价含设计与开发</span><span><span class="tg t-app">○ 对接</span> 含对接，App 订阅费另计</span><span><span class="tg t-no">— 不含</span></span></div>
+  </div>
+  <table class="rq">
+    <tr><th>编号</th><th>模块</th><th>本次交付功能</th><th>实现方式</th><th>范围</th></tr>
+    <tr><td>P01</td><td class="m">首页与商品推荐</td><td>品牌区、活动轮播、GoodLife / GoodFresh / GoodMood 系列入口、双列商品卡；后台配置图片、跳转、排序与上下线时间；无数据自动隐藏模块</td><td class="w">定制主题 Section</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P02</td><td class="m">分类与列表</td><td>系列页签 + 左侧分类 + 商品区；分页 / 连续加载、空态；筛选与排序维度确认后实现</td><td class="w">Shopify 系列 + 定制</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P03</td><td class="m">搜索</td><td>搜索联想、历史记录（清除单条 / 全部）、空关键词不提交、无结果推荐</td><td class="w">Search &amp; Discovery + 定制</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P04</td><td class="m">商品详情</td><td>图库、规格弹层（可售 / 价格 / 库存 / 数量）、优惠券入口、配送服务说明、评分入口、详情长图、吸底购买；缺货禁购、下架说明</td><td class="w">定制主题</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P05</td><td class="m">评价</td><td>评分统计、标签筛选、图片评价；仅已完成订单可评、防重复提交</td><td class="w">评价 App（如 Judge.me）+ 定制样式</td><td class="s"><span class="tg t-app">○ 对接</span></td></tr>
+    <tr><td>P06</td><td class="m">购物车</td><td>数量修改、勾选、全选、管理删除；合计只算勾选有效商品；库存不足 / 变价 / 下架提示</td><td class="w">定制购物车（勾选结算）</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P07</td><td class="m">确认订单与金额</td><td>地址、商品、费用汇总、优惠券与积分抵扣；提交前服务端复核价格 / 库存 / 优惠；防重复下单</td><td class="w">Shopify Checkout + 品牌化</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P08</td><td class="m">支付与银行卡</td><td>Visa / Mastercard / JCB 等托管支付，不存储卡号与 CVV；成功 / 失败 / 处理中 / 超时状态页</td><td class="w">支付网关对接（渠道由品牌签约）</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P09</td><td class="m">消息与在线客服</td><td>在线会话、图片发送、商品卡片、未读与离线提醒</td><td class="w">客服 App（如 Gorgias / LINE）</td><td class="s"><span class="tg t-app">○ 对接</span></td></tr>
+  </table>
+</section>
+
+<!-- 06 REQ TABLE 2 -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>06 / 20</span></div>
+  <div class="row" style="margin-top:34px;justify-content:space-between;align-items:flex-end">
+    <div><div class="kicker">04 · REQUIREMENTS · 需求表 2 / 3</div><h2 style="font-size:36px">账号、履约与会员：P10 – P17</h2></div>
+    <div class="legend"><span><span class="tg t-in">✓ 含</span> 本报价含设计与开发</span><span><span class="tg t-app">○ 对接</span> 含对接，App 订阅费另计</span><span><span class="tg t-no">— 不含</span></span></div>
+  </div>
+  <table class="rq">
+    <tr><th>编号</th><th>模块</th><th>本次交付功能</th><th>实现方式</th><th>范围</th></tr>
+    <tr><td>P10</td><td class="m">我的与账号登录</td><td>验证码登录（注册登录合并）、Facebook / Google 登录、协议与营销同意分开勾选；登录后返回原操作</td><td class="w">新版客户账户 + 社交登录 App</td><td class="s"><span class="tg t-app">○ 对接</span></td></tr>
+    <tr><td>P11</td><td class="m">个人资料与设置</td><td>头像、昵称、性别、生日编辑；退出登录；地址 / 银行卡入口</td><td class="w">客户元字段 + 定制</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P12</td><td class="m">收货地址</td><td>地址列表、新增编辑、唯一默认地址、行政区与邮编逐级选择；地图选点可选</td><td class="w">原生地址簿 + 定制（地图 API 费用另计）</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P13</td><td class="m">订单列表与详情</td><td>全部 / 待付款 / 待发货 / 待收货 / 待评价；取消、去支付、再次购买、费用明细与关键时间</td><td class="w">客户账户 + 定制扩展</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>P14</td><td class="m">物流</td><td>承运商、运单号复制、物流时间轴；无轨迹时文字物流兜底</td><td class="w">物流追踪 App（如 AfterShip）</td><td class="s"><span class="tg t-app">○ 对接</span></td></tr>
+    <tr><td>P15</td><td class="m">退款与退货售后</td><td>售后申请（类型 / 原因 / 凭证 / 可退金额）、处理进度、撤销申请；退款走原渠道</td><td class="w">原生退货 + 售后 App</td><td class="s"><span class="tg t-app">○ 对接</span></td></tr>
+    <tr><td>P16</td><td class="m">会员等级与权益</td><td>会员卡、当前等级与成长值进度、权益说明；等级规则后台可配</td><td class="w">会员 App（如 Rivo / Smile）+ 定制前端</td><td class="s"><span class="tg t-app">○ 对接</span></td></tr>
+    <tr><td>P17</td><td class="m">签到 · 积分 · 优惠券</td><td>签到日历与连续奖励、积分明细、积分兑券、优惠券（可用 / 已用 / 过期）</td><td class="w">会员 App + 定制签到模块</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+  </table>
+  <div class="note" style="margin-top:18px"><span class="lbl">原则</span><span>Shopify 原生能做的不装 App；必须装的 App 先测脚本体积与费用，上线前与品牌确认清单。</span></div>
+</section>
+
+<!-- 07 REQ TABLE 3 -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>07 / 20</span></div>
+  <div class="row" style="margin-top:34px;justify-content:space-between;align-items:flex-end">
+    <div><div class="kicker">04 · REQUIREMENTS · 需求表 3 / 3</div><h2 style="font-size:36px">电脑端布局、系统与依赖</h2></div>
+    <div class="legend"><span><span class="tg t-in">✓ 含</span></span><span><span class="tg t-app">○ 对接</span></span><span><span class="tg t-no">— 不含</span> 另行报价 / 由品牌提供</span></div>
+  </div>
+  <table class="rq">
+    <tr><th>编号</th><th>模块</th><th>本次交付功能</th><th>实现方式</th><th>范围</th></tr>
+    <tr><td>PC01–03</td><td class="m">全局框架 · 首页 · 列表</td><td>顶部导航 + 搜索 + 功能图标、宽屏 Banner 与系列展示、多列商品网格，页脚信息区</td><td class="w">定制主题</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>PC04–05</td><td class="m">详情 · 购物车 · 结算</td><td>左图右购买信息、详情评价下延；购物车列表 + 汇总；宽屏结算</td><td class="w">定制主题 + Checkout 品牌化</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>PC06–07</td><td class="m">会员中心 · 个人中心</td><td>左侧菜单 + 右侧内容：会员卡、权益、积分表格、优惠券、签到日历；资料、收藏与浏览记录</td><td class="w">定制页面</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>SYS</td><td class="m">多语言 · 币种 · 系统页</td><td>泰 / 英 / 中语言切换、THB 等币种、业务时区；FAQ、政策、404、弹窗（翻译内容由品牌提供）</td><td class="w">Shopify Markets + 定制</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>DATA</td><td class="m">数据与邮件</td><td>GA4 电商事件、Meta / TikTok Pixel、邮件 / 短信通知模板</td><td class="w">原生 + 标准对接</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>QA</td><td class="m">验收场景</td><td>PRD A01–A11：购买金额一致、防重复下单 / 回调 / 签到 / 兑券、越权访问、断网与异常恢复</td><td class="w">测试用例 + 真机验收</td><td class="s"><span class="tg t-in">✓ 含</span></td></tr>
+    <tr><td>APP</td><td class="m">iOS / Android App</td><td>原生 App 开发、推送、打包上架与审核整改</td><td class="w">另行报价</td><td class="s"><span class="tg t-no">— 不含</span></td></tr>
+    <tr><td>ADMIN</td><td class="m">自建管理后台 · ERP</td><td>独立权限审计后台、ERP / 仓储主数据对接</td><td class="w">确认后评估</td><td class="s"><span class="tg t-no">— 不含</span></td></tr>
+  </table>
+</section>
+
+<!-- 08 OPEN QUESTIONS -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>08 / 20</span></div>
+  <div class="abs" style="left:54px;top:96px;width:560px">
+    <div class="kicker">05 · TO CONFIRM · 启动前确认</div>
+    <h2>规则先定清楚，<br>报价和排期才能锁死。</h2>
+    <p class="lead">PRD 里标注"待确认"的业务规则，我们会在第 1 周启动会上和你们逐条过一遍，确认结果写进需求表 V1.0，作为设计和验收的唯一依据。</p>
+  </div>
+  <style>.q2{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.q2 .q{display:grid;grid-template-columns:48px 1fr;padding:15px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.55}.q2 .q i{font:500 12.5px var(--mono);font-style:normal;color:var(--cobalt);padding-top:2px}</style>
+  <div class="abs q2" style="left:680px;top:120px;width:866px">
+    <div class="q"><i>Q02</i><span>首发市场、界面语言、币种与配送国家（文档指向泰国）</span></div>
+    <div class="q"><i>Q04</i><span>支付服务商、支付方式与退款渠道是否已签约</span></div>
+    <div class="q"><i>Q05</i><span>手机号验证码与 Facebook / Google 登录是否都需要</span></div>
+    <div class="q"><i>Q06</i><span>商品、价格、库存、订单的主数据来源（是否有 ERP）</span></div>
+    <div class="q"><i>Q07</i><span>配送商、运费、免运门槛、配送范围与时效</span></div>
+    <div class="q"><i>Q08</i><span>取消、改址、超时关闭与自动收货规则</span></div>
+    <div class="q"><i>Q09</i><span>售后类型、申请期限、审核流程与退货运费</span></div>
+    <div class="q"><i>Q10</i><span>会员等级、积分、成长值、签到与优惠券完整规则</span></div>
+    <div class="q"><i>P07</i><span>优惠叠加顺序、抵扣上限、税费与四舍五入</span></div>
+    <div class="q"><i>P09</i><span>客服工具与人工服务时间，是否接入 LINE</span></div>
+    <div class="q"><i>Q11</i><span>草图中多账号切换、红色表单与单据页的业务含义</span></div>
+    <div class="q" style="border-bottom:1px solid var(--line)"><i>Q12</i><span>是否有清晰原设计稿，以及最终品牌素材与文案</span></div>
+  </div>
+</section>
+
+<!-- 09 SITEMAP -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>09 / 20</span></div>
+  <div class="row" style="margin-top:44px;justify-content:space-between;align-items:flex-end">
+    <div><div class="kicker">06 · SITEMAP · 我们会做的全部页面</div><h2 class="wide" style="font-size:40px;text-transform:uppercase">32 个模板 × PC / Mobile</h2></div>
+    <p style="width:640px;font-size:15.5px;line-height:1.75;color:#4b4e5a">PRD 里相似页面按同一功能的不同状态归并，最终收敛为 32 个模板。每个模板交付 PC（1440）与 Mobile（390）两套设计稿，含空态、加载、失败等关键状态。</p>
+  </div>
+  <style>
+    .sm{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:26px}
+    .sm .col{background:#fff;padding:20px 20px 10px}
+    .sm .hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.5px solid var(--ink);padding-bottom:10px}
+    .sm .hd b{font:800 15px var(--wide)} .sm .hd b small{font:700 15px var(--sans);margin-left:6px}
+    .sm .hd span{font:800 28px var(--wide);color:var(--cobalt)}
+    .sm .it{display:grid;grid-template-columns:30px 1fr;padding:9px 0;border-bottom:1px solid #ECEDF1}
+    .sm .it i{font:500 12px var(--mono);font-style:normal;color:var(--cobalt);padding-top:3px}
+    .sm .it div{font-size:14.5px} .sm .it div small{display:block;font:400 11.5px var(--mono);color:#8a8c99;margin-top:2px}
+  </style>
+  <div class="sm">
+    <div class="col"><div class="hd"><b>BROWSE<small>浏览</small></b><span>6</span></div>
+      <div class="it"><i>01</i><div>首页<small>Home · P01</small></div></div>
+      <div class="it"><i>02</i><div>系列专题页<small>Series · GoodLife…</small></div></div>
+      <div class="it"><i>03</i><div>分类与列表<small>PLP · P02</small></div></div>
+      <div class="it"><i>04</i><div>搜索浮层 + 结果<small>Search · P03</small></div></div>
+      <div class="it"><i>05</i><div>导航 / 移动菜单<small>Navigation</small></div></div>
+      <div class="it"><i>06</i><div>活动落地页<small>Campaign</small></div></div>
+    </div>
+    <div class="col"><div class="hd"><b>SHOP<small>交易</small></b><span>8</span></div>
+      <div class="it"><i>07</i><div>商品详情 + 规格弹层<small>PDP · P04</small></div></div>
+      <div class="it"><i>08</i><div>评价列表 + 发表评价<small>Reviews · P05</small></div></div>
+      <div class="it"><i>09</i><div>购物车（勾选结算）<small>Cart · P06</small></div></div>
+      <div class="it"><i>10</i><div>确认订单<small>Checkout · P07</small></div></div>
+      <div class="it"><i>11</i><div>支付方式与银行卡<small>Payment · P08</small></div></div>
+      <div class="it"><i>12</i><div>支付结果 4 态<small>Result</small></div></div>
+      <div class="it"><i>13</i><div>领券中心<small>Coupons</small></div></div>
+      <div class="it"><i>14</i><div>收藏 / 浏览记录<small>Wishlist · PC07</small></div></div>
+    </div>
+    <div class="col"><div class="hd"><b>ORDER<small>履约售后</small></b><span>6</span></div>
+      <div class="it"><i>15</i><div>订单列表<small>Orders · P13</small></div></div>
+      <div class="it"><i>16</i><div>订单详情<small>Order Detail</small></div></div>
+      <div class="it"><i>17</i><div>物流追踪<small>Tracking · P14</small></div></div>
+      <div class="it"><i>18</i><div>售后申请<small>Return Form · P15</small></div></div>
+      <div class="it"><i>19</i><div>售后中心 + 进度<small>Return Status</small></div></div>
+      <div class="it"><i>20</i><div>客服会话<small>Chat · P09</small></div></div>
+    </div>
+    <div class="col"><div class="hd"><b>MEMBER<small>会员账号</small></b><span>7</span></div>
+      <div class="it"><i>21</i><div>登录 / 注册<small>Auth · P10</small></div></div>
+      <div class="it"><i>22</i><div>个人中心<small>Account · PC07</small></div></div>
+      <div class="it"><i>23</i><div>资料与设置<small>Profile · P11</small></div></div>
+      <div class="it"><i>24</i><div>地址簿 + 编辑<small>Address · P12</small></div></div>
+      <div class="it"><i>25</i><div>会员等级与权益<small>Tiers · P16</small></div></div>
+      <div class="it"><i>26</i><div>签到日历<small>Check-in · P17</small></div></div>
+      <div class="it"><i>27</i><div>积分兑换 + 明细<small>Points · P17</small></div></div>
+    </div>
+    <div class="col"><div class="hd"><b>SERVICE<small>服务系统</small></b><span>5</span></div>
+      <div class="it"><i>28</i><div>消息中心<small>Inbox</small></div></div>
+      <div class="it"><i>29</i><div>帮助中心 FAQ<small>Help</small></div></div>
+      <div class="it"><i>30</i><div>协议与政策页<small>Legal</small></div></div>
+      <div class="it"><i>31</i><div>关于 ipopi<small>About</small></div></div>
+      <div class="it"><i>32</i><div>404 · 弹窗 · 语言切换<small>System</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 HOMEPAGE -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>10 / 20</span></div>
+  <div class="abs" style="left:54px;top:90px;width:300px">
+    <div class="wf" style="height:640px">
+      <div style="height:22px"><span>LOGO · NAV · SEARCH · 消息 · 购物车</span></div>
+      <div class="hl" style="height:130px">HERO BANNER · 活动轮播</div>
+      <div class="hl3" style="height:56px">GOODLIFE · GOODFRESH · GOODMOOD</div>
+      <div style="height:30px"><span>领券 · 会员签到入口</span></div>
+      <div style="height:120px"><span>系列商品 · 关联卡片</span></div>
+      <div style="height:70px"><span>横向推荐</span></div>
+      <div style="height:100px"><span>双列商品流</span></div>
+      <div class="hl2" style="height:40px">FOOTER · 公司信息</div>
+    </div>
+    <div class="wfname">HOMEPAGE · PC02</div>
+  </div>
+  <div class="abs" style="left:420px;top:96px;width:1126px">
+    <div class="kicker">07 · KEY TEMPLATES · HOMEPAGE</div>
+    <h2>首页负责逛，<br>每一屏都通往一个下单理由。</h2>
+    <div class="pts" style="margin-top:28px">
+      <div class="p"><b>活动轮播</b><span>图片、跳转目标、排序、上下线时间后台可配；活动与商品点击分别绑定。</span></div>
+      <div class="p"><b>三大系列</b><span>GoodLife / GoodFresh / GoodMood 各有色彩与专题页，系列是品牌的货架逻辑。</span></div>
+      <div class="p"><b>会员前置</b><span>领券与签到入口放首屏下方，把"逛"自然导向"注册与复访"。</span></div>
+      <div class="p"><b>商品卡统一</b><span>图片、名称、售价；原价、销量、标签按配置显示；与详情页价格一致。</span></div>
+      <div class="p"><b>兜底状态</b><span>无推荐数据自动隐藏模块，图片失败有占位，返回首页恢复浏览位置。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 PDP & CHECKOUT -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>11 / 20</span></div>
+  <div class="abs" style="left:54px;top:90px;width:560px">
+    <div class="wf" style="height:640px">
+      <div style="height:22px"><span>NAV</span></div>
+      <div style="height:250px;background:none;flex-direction:row;gap:6px;align-items:stretch">
+        <div class="hl" style="flex:1.3">GALLERY · 图片 / 视频</div>
+        <div style="flex:1;background:none;flex-direction:column;gap:6px;align-items:stretch">
+          <div style="flex:1"><span>NAME · PRICE · 评分</span></div>
+          <div style="flex:1"><span>优惠券入口</span></div>
+          <div style="flex:1"><span>规格 · 数量 · 库存</span></div>
+          <div class="hl2" style="flex:1.1">加入购物车 / 立即购买</div>
+          <div style="flex:1"><span>配送 · 服务说明</span></div>
+        </div>
+      </div>
+      <div style="height:60px"><span>评价摘要 · 查看全部</span></div>
+      <div style="height:150px"><span>详情长图</span></div>
+      <div style="height:50px"><span>相关推荐</span></div>
+      <div class="hl3" style="height:36px">MOBILE · 吸底购买栏</div>
+    </div>
+    <div class="wfname">PRODUCT PAGE · P04 / PC04</div>
+  </div>
+  <div class="abs" style="left:670px;top:96px;width:876px">
+    <div class="kicker">08 · PDP → CHECKOUT</div>
+    <h2>选得清楚，<br>付得放心，<br>金额一分不差。</h2>
+    <div class="pts" style="margin-top:26px">
+      <div class="p"><b>规格弹层</b><span>可售状态、价格、库存实时联动；未选必选规格先提示，缺货禁购。</span></div>
+      <div class="p"><b>勾选结算</b><span>购物车支持勾选部分商品结算，未勾选商品保留在购物车。</span></div>
+      <div class="p"><b>金额结构</b><span>小计 − 优惠 − 优惠券 − 积分 + 运费 = 应付；不适用项隐藏。</span></div>
+      <div class="p"><b>托管支付</b><span>卡号与 CVV 不落我方系统；以支付渠道回调结果更新订单。</span></div>
+      <div class="p"><b>防重复</b><span>重复点击只生成一个订单；处理中提供查询入口，不诱导重复付款。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 MEMBER -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>12 / 20</span></div>
+  <div class="abs" style="left:54px;top:96px;width:620px">
+    <div class="kicker">09 · MEMBERSHIP · 会员体系</div>
+    <h2>第一单是交易，<br>第二单才是会员。</h2>
+    <p class="lead">会员等级、成长值、签到、积分兑券是 ipopi 区别于普通商城的核心。我们以成熟会员 App 承接积分账本（保证扣分与发券的一致性），前端按 ipopi 视觉完整重做，PC 与 Mobile 各一套。</p>
+    <div class="note" style="margin-top:28px"><span class="lbl">RETENTION</span><span>注册礼 · 每日签到 · 积分兑券 · 等级权益 · 生日礼——会员中心就是复购引擎。</span></div>
+  </div>
+  <style>.g8{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g8 .card{padding:20px 22px}.g8 h4{font-size:19px;margin:6px 0 4px}.g8 .sub{font-size:14px}</style>
+  <div class="abs g8" style="left:760px;top:150px;width:786px">
+    <div class="card"><div class="lbl">TIERS</div><h4>会员等级卡</h4><div class="sub">当前等级、成长值进度、下一级权益</div></div>
+    <div class="card"><div class="lbl">BENEFITS</div><h4>等级权益</h4><div class="sub">权益说明与使用场景跳转</div></div>
+    <div class="card"><div class="lbl">CHECK-IN</div><h4>签到日历</h4><div class="sub">每日一次、连续奖励、补签规则可配</div></div>
+    <div class="card"><div class="lbl">POINTS</div><h4>积分明细</h4><div class="sub">来源、增减、时间、关联订单</div></div>
+    <div class="card"><div class="lbl">REDEEM</div><h4>积分兑券</h4><div class="sub">校验余额与库存，扣分发券同时成功</div></div>
+    <div class="card"><div class="lbl">COUPONS</div><h4>我的优惠券</h4><div class="sub">可用 / 已用 / 过期，门槛与有效期</div></div>
+    <div class="card"><div class="lbl">PC LAYOUT</div><h4>宽屏会员中心</h4><div class="sub">左侧菜单 + 右侧卡片与表格（PC06）</div></div>
+    <div class="card"><div class="lbl">REFUND</div><h4>退单回滚</h4><div class="sub">积分、成长值、优惠券按确认规则返还</div></div>
+  </div>
+</section>
+
+<!-- 13 PC & MOBILE -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>13 / 20</span></div>
+  <div style="margin-top:44px">
+    <div class="kicker">10 · PC &amp; MOBILE</div>
+    <h2>两端都是完整设计，<br>不是把电脑版缩小。</h2>
+  </div>
+  <div class="row" style="margin-top:30px;gap:46px">
+    <div style="width:540px">
+      <div style="height:200px;border:1.5px solid var(--ink);background:repeating-linear-gradient(135deg,#ECEDF1 0 8px,#F6F7F9 8px 16px);position:relative"><div style="height:22px;background:#fff;border-bottom:1px solid var(--line)"></div><div class="abs" style="left:40px;top:60px;width:190px;height:18px;background:var(--ink)"></div><div class="abs" style="left:40px;top:90px;width:180px;height:12px;background:var(--cobalt)"></div></div>
+      <div class="wfname" style="font-size:21px">PC · <span style="font-family:var(--sans)">桌面端</span></div>
+      <div class="pts" style="margin-top:10px"><div class="p" style="grid-template-columns:70px 1fr;font-size:15px"><span style="color:#8a8c99">设计稿</span><span>1440 px · 12 栏栅格</span></div><div class="p" style="grid-template-columns:70px 1fr;font-size:15px"><span style="color:#8a8c99">重点</span><span>顶部横向导航、个人 / 会员中心侧栏、宽屏表格与结算</span></div></div>
+    </div>
+    <div style="width:330px">
+      <div style="width:120px;height:200px;border:1.5px solid var(--ink);border-radius:18px;background:repeating-linear-gradient(135deg,#ECEDF1 0 8px,#F6F7F9 8px 16px);position:relative;overflow:hidden"><div style="height:20px;background:#fff"></div><div class="abs" style="left:12px;top:50px;width:60px;height:14px;background:var(--ink)"></div><div class="abs" style="left:0;right:0;bottom:0;height:26px;background:var(--cobalt)"></div></div>
+      <div class="wfname" style="font-size:21px">MOBILE · <span style="font-family:var(--sans)">手机网页</span></div>
+      <div class="pts" style="margin-top:10px"><div class="p" style="grid-template-columns:70px 1fr;font-size:15px"><span style="color:#8a8c99">设计稿</span><span>390 px · 4 栏栅格</span></div><div class="p" style="grid-template-columns:70px 1fr;font-size:15px"><span style="color:#8a8c99">重点</span><span>底部五项导航、规格 / 地址弹层、吸底购买、浏览器返回与登录续接</span></div></div>
+    </div>
+    <div style="flex:1">
+      <div style="border-bottom:1px solid var(--line);padding-bottom:14px"><div class="wide" style="font-size:54px">64</div><div style="font-size:15px;color:#4b4e5a">张设计稿（32 模板 × 2 端）</div></div>
+      <div style="border-bottom:1px solid var(--line);padding:14px 0"><div class="wide" style="font-size:54px">≤ 2.5s</div><div style="font-size:15px;color:#4b4e5a">移动端 LCP 目标，Core Web Vitals「良好」</div></div>
+      <div style="border-bottom:1px solid var(--line);padding:14px 0"><div class="wide" style="font-size:54px">0</div><div style="font-size:15px;color:#4b4e5a">页面搭建插件：原生 Liquid 手写主题，不依赖 PageFly / GemPages</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 INVESTMENT -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>14 / 20</span></div>
+  <div class="abs" style="left:54px;top:96px;width:800px">
+    <div class="kicker">11 · INVESTMENT</div>
+    <h2>一个报价，<br>从需求到上线<br>全部包含。</h2>
+    <p class="lead">不是「建站 + 另外再买设计、再买对接」。需求梳理、设计、开发、App 对接、交易验收与运营交接打包为一个项目，一个团队负责到底。</p>
+    <div class="rows" style="margin-top:34px;width:800px">
+      <div class="r" style="grid-template-columns:150px 1fr;padding:16px 0"><span class="k">LEAD TIME</span><span style="font-size:17px">≈ 10 周上线 + 60 天售后支持</span></div>
+      <div class="r" style="grid-template-columns:150px 1fr;padding:16px 0"><span class="k">PAYMENT</span><span style="font-size:17px">40% 启动 · 30% 设计定稿 · 30% 上线前</span></div>
+      <div class="r" style="grid-template-columns:150px 1fr;padding:16px 0"><span class="k">CURRENCY</span><span style="font-size:17px">人民币，不含税</span></div>
+    </div>
+  </div>
+  <div class="abs" style="left:920px;top:92px;width:626px;height:760px;background:var(--cobalt);color:#fff;clip-path:polygon(9% 0,91% 0,100% 6%,100% 100%,0 100%,0 6%);padding:58px 40px 34px">
+    <div style="position:absolute;left:50%;top:18px;width:26px;height:26px;margin-left:-13px;border-radius:50%;background:#E9EAEE;border:4px solid rgba(255,255,255,.5)"></div>
+    <div class="row mono" style="justify-content:space-between;font-size:12.5px;letter-spacing:.14em;opacity:.9"><span>FLUX DIGITAL</span><span>STYLE NO. FD-IPO-01</span></div>
+    <div class="wide" style="font-size:40px;margin-top:22px">FLAGSHIP</div>
+    <div class="row" style="align-items:flex-start"><div class="wide" style="font-size:96px;line-height:1">¥49,800</div><span class="mono" style="font-size:12px;margin:8px 0 0 8px">CNY</span></div>
+    <style>.tag .tr{display:grid;grid-template-columns:130px 1fr;gap:10px;padding:13px 0;border-top:1px dashed rgba(255,255,255,.45);font-size:14.5px;line-height:1.6}.tag .tr span:first-child{font:500 12px var(--mono);letter-spacing:.12em;padding-top:3px}</style>
+    <div class="tag" style="margin-top:24px;border-bottom:1px dashed rgba(255,255,255,.45)">
+      <div class="tr"><span>STRATEGY</span><span>PRD 拆解 · 需求表 V1.0 · 信息架构 · 业务流程 · 待确认清单</span></div>
+      <div class="tr"><span>DESIGN</span><span>视觉规范 · 约 32 模板 × PC / Mobile · 关键状态 · Figma 组件库</span></div>
+      <div class="tr"><span>BUILD</span><span>Shopify OS 2.0 定制主题 · 勾选购物车 · 会员中心 · 签到模块 · 多语言 / 多币种</span></div>
+      <div class="tr"><span>INTEGRATION</span><span>支付网关 · 评价 · 客服 · 物流 · 会员积分 · 社交登录 · GA4 / Pixel</span></div>
+      <div class="tr"><span>QA</span><span>PRD 验收场景 A01–A11 · 真机测试 · 上线验收报告</span></div>
+      <div class="tr"><span>GUIDANCE</span><span>2 次后台培训 · 操作录屏与手册 · 60 天售后支持</span></div>
+    </div>
+    <div class="row" style="position:absolute;left:40px;right:40px;bottom:34px;justify-content:space-between;align-items:flex-end">
+      <span class="mono" style="font-size:11.5px;letter-spacing:.12em;opacity:.9">STRATEGY · DESIGN · BUILD · QA · GUIDANCE</span>
+      <div style="width:150px;height:34px;background:repeating-linear-gradient(90deg,#fff 0 2px,transparent 2px 4px,#fff 4px 5px,transparent 5px 9px,#fff 9px 12px,transparent 12px 14px)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 TIMELINE -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>15 / 20</span></div>
+  <div style="margin-top:44px">
+    <div class="kicker">12 · TIMELINE</div>
+    <h2>约 10 周上线，<br>交易闭环测透了再发布。</h2>
+  </div>
+  <style>
+    .gt{margin-top:28px;position:relative}
+    .gt .hdr{margin-left:300px;height:44px;background:#fff;display:grid;grid-template-columns:repeat(12,1fr)}
+    .gt .hdr span{font:400 11.5px var(--mono);color:#77798a;border-left:1px solid var(--line);padding:22px 0 0 6px}
+    .gt .ln{height:58px;border-bottom:1px solid var(--line);position:relative}
+    .gt .ln b{display:block;font:800 15px var(--wide);padding-top:10px}
+    .gt .ln small{font-size:13.5px;color:#4b4e5a}
+    .gt .bar{position:absolute;top:18px;height:22px;background:var(--cobalt)}
+  </style>
+  <!-- grid 1192 / 12 = 99.33 per col -->
+  <div class="gt">
+    <div class="hdr"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span><span>W9</span><span>W10</span><span>+4W</span><span>+8W</span></div>
+    <div class="ln"><b>REQUIREMENTS</b><small>PRD 拆解 · 规则确认 · 需求表 V1.0</small><div class="bar" style="left:300px;width:149px"></div></div>
+    <div class="ln"><b>DIRECTION</b><small>视觉规范 · 首页 / PDP 定稿</small><div class="bar" style="left:399px;width:199px"></div></div>
+    <div class="ln"><b>UI DESIGN</b><small>全站 PC + Mobile · 关键状态</small><div class="bar" style="left:499px;width:397px"></div></div>
+    <div class="ln"><b>BUILD</b><small>主题开发 · 会员 · App 对接</small><div class="bar" style="left:697px;width:497px;background:var(--ink)"></div></div>
+    <div class="ln"><b>QA &amp; LAUNCH</b><small>A01–A11 验收 · 真机 · 上线</small><div class="bar" style="left:1095px;width:199px;background:#7C8CF0"></div></div>
+    <div class="ln"><b>SUPPORT 60 DAYS</b><small>Bug 修复 · 每周运营答疑</small><div class="bar" style="left:1294px;width:198px;background:var(--lav)"></div></div>
+  </div>
+  <style>.f4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:30px}.f4 div{border-top:1px solid var(--line);padding-top:14px;font-size:14.5px;color:#4b4e5a}.f4 b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}</style>
+  <div class="f4">
+    <div><b>每周同步</b>每周 1 次进度会，Figma 与需求表实时可看</div>
+    <div><b>先定规则再开发</b>业务规则确认写进需求表 V1.0，避免返工</div>
+    <div><b>预览链接</b>开发期间提供未发布主题预览，边做边看</div>
+    <div><b>验收上线</b>按验收场景逐条通过后正式发布</div>
+  </div>
+</section>
+
+<!-- 16 SELECTED WORK INTRO -->
+<section class="slide dark">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>16 / 20</span></div>
+  <div class="abs" style="left:54px;top:280px;width:760px">
+    <div class="kicker">13 · SELECTED WORK</div>
+    <h1 class="big" style="font-size:118px;margin-top:22px">60<br>BRANDS</h1>
+    <p style="font-size:19px;line-height:1.75;margin-top:28px;color:rgba(241,242,246,.8)">Flux Digital 的部分独立站案例，覆盖时尚配饰、美妆健康、家居、食品饮料与科技 B2B。<br>以下精选与 ipopi 相近的生活方式与日常消费品牌。<br>截图为各网站 2026 年 10 月线上首页实拍。</p>
+  </div>
+  <style>.cat .c{display:flex;align-items:baseline;gap:32px;border-top:1px solid rgba(255,255,255,.14);padding:20px 0}.cat .c:last-child{border-bottom:1px solid rgba(255,255,255,.14)}.cat b{font:800 36px var(--wide);color:#A9B4FF;width:62px}.cat span{font:400 14px var(--mono);letter-spacing:.14em;color:rgba(255,255,255,.75)}</style>
+  <div class="abs cat" style="left:920px;top:292px;width:626px">
+    <div class="c"><b>18</b><span>FASHION &amp; ACCESSORIES · 时尚配饰</span></div>
+    <div class="c"><b>13</b><span>BEAUTY &amp; WELLNESS · 美妆健康</span></div>
+    <div class="c"><b>08</b><span>HOME &amp; LIVING · 家居生活</span></div>
+    <div class="c"><b>15</b><span>FOOD &amp; BEVERAGE · 食品饮料</span></div>
+    <div class="c"><b>06</b><span>TECH · B2B · LIFESTYLE</span></div>
+  </div>
+</section>
+
+<!-- 17 FEATURED 1 -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>17 / 20</span></div>
+  <div class="kicker" style="margin-top:44px">FEATURED · 精选案例 · PC + MOBILE</div>
+  <div class="case" style="left:54px;top:140px">
+    <img class="pc" src="cases/touchland-pc.jpg"><div class="ph"><img src="cases/touchland-m.jpg"></div>
+    <div class="cap"><b>Touchland</b><i>touchland.com</i><em>BEAUTY &amp; WELLNESS</em></div>
+    <div class="why">多 SKU、多系列的日用品商城：系列导航、套装组合与会员 Rewards 入口，与 ipopi 三大系列 + 会员体系结构相近。</div>
+  </div>
+  <div class="case" style="left:846px;top:140px">
+    <img class="pc" src="cases/olaplex-pc.jpg"><div class="ph"><img src="cases/olaplex-m.jpg"></div>
+    <div class="cap"><b>Olaplex</b><i>olaplex.com</i><em>BEAUTY &amp; WELLNESS</em></div>
+    <div class="why">高频促销与活动运营：节日礼盒、限时优惠、多市场切换——对应 ipopi 的活动轮播、优惠券与多语言需求。</div>
+  </div>
+</section>
+
+<!-- 18 FEATURED 2 -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>18 / 20</span></div>
+  <div class="kicker" style="margin-top:44px">FEATURED · 精选案例 · PC + MOBILE</div>
+  <div class="case" style="left:54px;top:140px">
+    <img class="pc" src="cases/wildling-pc.jpg"><div class="ph"><img src="cases/wildling-m.jpg"></div>
+    <div class="cap"><b>Wildling</b><i>wildling.com</i><em>BEAUTY &amp; WELLNESS</em></div>
+    <div class="why">温暖的生活方式调性 + 测试问卷引导选购，移动端单手浏览体验完整。</div>
+  </div>
+  <div class="case" style="left:846px;top:140px">
+    <img class="pc" src="cases/abel-pc.jpg"><div class="ph"><img src="cases/abel-m.jpg"></div>
+    <div class="cap"><b>Abel</b><i>abelfragrance.com</i><em>BEAUTY &amp; WELLNESS</em></div>
+    <div class="why">大图叙事与克制排版，系列故事和商品陈列在同一页面里自然衔接。</div>
+  </div>
+</section>
+
+<!-- 19 GRID -->
+<section class="slide">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>19 / 20</span></div>
+  <div class="kicker" style="margin-top:36px;margin-bottom:20px">SELECTED WORK · 生活方式 · 日常消费</div>
+  <div class="grid12">
+    <div class="g"><img src="cases/partake.jpg"><div class="c"><b>Partake Foods</b><i>partakefoods.com</i></div></div>
+    <div class="g"><img src="cases/plink.jpg"><div class="c"><b>Plink</b><i>drinkplink.com</i></div></div>
+    <div class="g"><img src="cases/twoleaves.jpg"><div class="c"><b>Two Leaves Tea</b><i>twoleavestea.com</i></div></div>
+    <div class="g"><img src="cases/nativepet.jpg"><div class="c"><b>Native Pet</b><i>nativepet.com</i></div></div>
+    <div class="g"><img src="cases/wenatal.jpg"><div class="c"><b>WeNatal</b><i>wenatal.com</i></div></div>
+    <div class="g"><img src="cases/smiletwice.jpg"><div class="c"><b>Smile Twice</b><i>smiletwice.com</i></div></div>
+    <div class="g"><img src="cases/remedy.jpg"><div class="c"><b>Remedy Skin</b><i>remedyskin.com</i></div></div>
+    <div class="g"><img src="cases/revitin.jpg"><div class="c"><b>Revitin</b><i>revitin.com</i></div></div>
+    <div class="g"><img src="cases/timeline.jpg"><div class="c"><b>Timeline</b><i>timeline.com</i></div></div>
+    <div class="g"><img src="cases/resore.jpg"><div class="c"><b>Resore</b><i>resore.com</i></div></div>
+    <div class="g"><img src="cases/dua.jpg"><div class="c"><b>Dua by AB</b><i>duabyab.com</i></div></div>
+    <div class="g"><img src="cases/eclo.jpg"><div class="c"><b>Eclo Beauty</b><i>eclobeauty.com</i></div></div>
+  </div>
+</section>
+
+<!-- 20 NEXT STEPS -->
+<section class="slide dark">
+  <div class="top"><span>FLUX DIGITAL × IPOPI</span><span>20 / 20</span></div>
+  <div class="abs" style="left:54px;top:300px;width:760px">
+    <div class="kicker">NEXT STEPS</div>
+    <h1 class="big" style="font-size:88px;margin-top:22px">LET'S MAKE<br>IT GOOD.</h1>
+    <p style="font-size:20px;margin-top:28px;color:rgba(241,242,246,.8)">Prepared by Flux Digital · 2026.10.13 · 本报价有效期 30 天</p>
+  </div>
+  <div class="abs" style="left:836px;top:280px;width:710px">
+    <style>.ns .s{display:grid;grid-template-columns:56px 120px 1fr;padding:18px 0;border-top:1px solid rgba(255,255,255,.14);align-items:baseline}.ns .s:last-child{border-bottom:1px solid rgba(255,255,255,.14)}.ns i{font:500 12.5px var(--mono);font-style:normal;color:#A9B4FF}.ns b{font-size:18px}.ns span{font-size:15.5px;color:rgba(255,255,255,.8)}.ex{font-size:14px;line-height:1.75;color:rgba(255,255,255,.6);margin-top:12px}.ex b{color:#fff;margin-right:8px}</style>
+    <div class="ns">
+      <div class="s"><i>01</i><b>确认范围</b><span>确认需求表的 ✓ / ○ 范围、首发市场与语言、支付渠道。</span></div>
+      <div class="s"><i>02</i><b>启动项目</b><span>支付 40% 启动款；我们发送素材清单，品牌开通 Shopify 协作者权限。</span></div>
+      <div class="s"><i>03</i><b>第 1 周</b><span>启动会逐条确认业务规则，输出需求表 V1.0，进入设计。</span></div>
+    </div>
+    <p class="ex" style="margin-top:24px"><b>品牌提供</b>Logo 与品牌规范、产品图与视频、商品数据与规格、网站文案与翻译、业务规则（会员 / 售后 / 配送）、Shopify 账号、域名与支付渠道签约。</p>
+    <p class="ex"><b>不含</b>iOS / Android App、自建管理后台、ERP 对接、Shopify 月费、第三方 App 订阅、地图 / 短信等按量费用、商用字体授权、拍摄、文案撰写与翻译、广告投放。</p>
+    <p class="ex"><b>说明</b>约 32 个模板为标准范围；新增页面或超出修改轮次（每模板 2 轮）按工时另计；需求表 V1.0 确认后的新增需求单独评估。</p>
+  </div>
+</section>
+
+</body>
+</html>
