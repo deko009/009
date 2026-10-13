@@ -14,8 +14,7 @@ PHOTO = "https://cdn.klaviyomail.com/company/RLiMzU/images/6bc3749b-e3ac-4578-ad
 BAND = "https://cdn.klaviyomail.com/company/RLiMzU/images/9ab928b8-7b72-4281-92cf-8c1b9cb19010.jpeg"
 HELPER = "https://cdn.klaviyomail.com/company/RLiMzU/images/d986a5b7-bd54-4cba-965f-6c3d205ced5b.png"
 INSTAGRAM = "https://cdn.klaviyomail.com/company/RLiMzU/images/50e6aefb-d99f-424f-8c97-2724fa1f0f90.png"
-# New assets: upload assets/walker.png, bottle-5oz.png, bottle-8oz.png, burst-10.png to Klaviyo and paste their URLs here
-WALKER = "assets/walker.png"
+# New assets: upload assets/bottle-5oz.png, bottle-8oz.png, burst-10.png to Klaviyo and paste their URLs here
 BOTTLE_5 = "assets/bottle-5oz.png"
 BOTTLE_8 = "assets/bottle-8oz.png"
 BURST_10 = "assets/burst-10.png"
@@ -84,7 +83,7 @@ def coupon_card():
             <p style="padding-top:14px;{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{PERI};text-align:center;">For the waitlist</p>
             <h3 style="padding-top:6px;{H}font-size:22px;line-height:28px;color:{NAVY};text-align:center;">Your waitlist thank-you</h3>
             <p style="padding-top:12px;{B}font-size:15px;line-height:23px;color:{INK};text-align:center;">15% off your first order, plus a free Venting&nbsp;Tube&nbsp;2-pack.</p>
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAPER}" style="margin-top:18px;background:{PAPER};border:2px dashed {ORANGE};border-radius:14px;border-collapse:separate;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAPER}" style="margin-top:18px;background:{PAPER};border:1.5px dashed #F6A482;border-radius:14px;border-collapse:separate;">
               <tr>
                 <td align="center" class="codef" style="padding:16px 18px;{B}font-weight:600;font-size:22px;line-height:30px;letter-spacing:1px;color:{NAVY};word-break:break-all;text-align:center;">{{% coupon_code 'EARLY15' %}}</td>
               </tr>
@@ -177,8 +176,7 @@ a {{color:{NAVY}}}
   <!-- ============ HERO ============ -->
   <tr>
     <td class="px" align="center" style="padding:40px 40px 0 40px;text-align:center;">
-      <img src="{WALKER}" width="96" height="108" alt="" style="width:96px;height:108px;margin:0 auto;"/>
-      <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:18px auto 0 auto;border-collapse:separate;"><tr>
+      <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:8px auto 0 auto;border-collapse:separate;"><tr>
         <td bgcolor="{PAPER}" style="background:{PAPER};border:1px solid #B9C6F7;border-radius:999px;padding:8px 18px;{B}font-size:15px;line-height:20px;color:{NAVY};">Open to everyone</td>
       </tr></table>
       <h1 class="h1" style="padding-top:18px;{H}font-size:52px;line-height:54px;letter-spacing:-1.6px;color:{NAVY};text-align:center;">Ronini is <span style="color:{ORANGE};">open.</span></h1>
