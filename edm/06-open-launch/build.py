@@ -14,10 +14,11 @@ PHOTO = "https://cdn.klaviyomail.com/company/RLiMzU/images/6bc3749b-e3ac-4578-ad
 BAND = "https://cdn.klaviyomail.com/company/RLiMzU/images/9ab928b8-7b72-4281-92cf-8c1b9cb19010.jpeg"
 HELPER = "https://cdn.klaviyomail.com/company/RLiMzU/images/d986a5b7-bd54-4cba-965f-6c3d205ced5b.png"
 INSTAGRAM = "https://cdn.klaviyomail.com/company/RLiMzU/images/50e6aefb-d99f-424f-8c97-2724fa1f0f90.png"
-# New assets: upload assets/walker.png, bottle-5oz.png, bottle-8oz.png to Klaviyo and paste their URLs here
+# New assets: upload assets/walker.png, bottle-5oz.png, bottle-8oz.png, burst-10.png to Klaviyo and paste their URLs here
 WALKER = "assets/walker.png"
 BOTTLE_5 = "assets/bottle-5oz.png"
 BOTTLE_8 = "assets/bottle-8oz.png"
+BURST_10 = "assets/burst-10.png"
 
 PRODUCT_URL = "https://ronini.com/products/the-ronini-wrapped-glass-bottle"
 DISCOUNT_URL = "https://ronini.com/discount/{% coupon_code 'EARLY15' %}?redirect=%2Fproducts%2Fthe-ronini-wrapped-glass-bottle"
@@ -152,6 +153,8 @@ a {{color:{NAVY}}}
   .panel {{padding:28px 18px !important}}
   .card {{padding:24px 20px !important}}
   .codef {{font-size:18px !important;line-height:26px !important}}
+  .burst-cell {{width:76px !important;padding-left:8px !important}}
+  .burst {{width:76px !important;height:76px !important}}
   .price {{font-size:34px !important;line-height:38px !important}}
 }}
 </style>
@@ -223,9 +226,9 @@ a {{color:{NAVY}}}
                 <p style="{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{PERI};">Subscribe and save</p>
                 <h2 class="h2" style="padding-top:10px;{H}font-size:26px;line-height:32px;letter-spacing:-0.4px;color:{NAVY};">Fresh nipples every two&nbsp;months.</h2>
               </td>
-              <td valign="top" align="right" width="84" class="hide-sm" style="width:84px;padding-left:12px;">
+              <td valign="top" align="right" width="106" class="burst-cell" style="width:106px;padding-left:12px;">
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr>
-                  <td align="center" valign="middle" width="76" height="76" bgcolor="{PERI}" style="width:76px;height:76px;background:{PERI};border:2px solid {NAVY};border-radius:999px;{H}font-size:22px;line-height:22px;color:{PAPER};">10%</td>
+                  <td align="center" valign="middle" width="106" style="width:106px;"><img src="{BURST_10}" width="106" height="106" alt="10% off" class="burst" style="width:106px;height:106px;"/></td>
                 </tr></table>
               </td>
             </tr></table>
