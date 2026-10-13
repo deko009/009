@@ -280,8 +280,7 @@ a {{color:{NAVY}}}
   <!-- ============ TWO-WAY STREET ============ -->
   <tr>
     <td class="px" align="center" style="padding:56px 40px 44px 40px;">
-      <img src="{WALKER}" width="72" height="81" alt="" style="width:72px;height:81px;margin:0 auto;"/>
-      <h3 class="h2" style="padding-top:16px;{H}font-size:26px;line-height:32px;letter-spacing:-0.5px;color:{NAVY};text-align:center;">And this inbox is a two-way street.</h3>
+      <h3 class="h2" style="padding-top:0;{H}font-size:26px;line-height:32px;letter-spacing:-0.5px;color:{NAVY};text-align:center;">And this inbox is a two-way street.</h3>
       <p style="padding-top:10px;{B}font-size:15px;line-height:22px;color:{INK};text-align:center;">Reply anytime, a person answers.</p>
       <p style="padding-top:6px;{B}font-weight:600;font-size:15px;line-height:22px;text-align:center;"><a href="mailto:hi@ronini.com" style="color:{ORANGE};text-decoration:underline;">hi@ronini.com</a></p>
     </td>
