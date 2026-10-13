@@ -16,3 +16,10 @@ Before scheduling in Klaviyo:
 4. Send a test of each and check the code + the discount link on the waitlist version.
 
 `build.py` regenerates both files from one template.
+
+## Pushing to Klaviyo with another Claude Code session
+
+`klaviyo_upload.py` (stdlib only) uploads the 4 images, writes `dist/` HTML with Klaviyo URLs,
+creates two CODE templates and, given audience ids, two **draft** campaigns prefilled for
+Oct 13 8:00 AM ET. It never sends or schedules. Dry run by default; `--apply` to call the API.
+Needs `KLAVIYO_API_KEY` (private key with images, templates and campaigns write scopes).
