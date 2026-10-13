@@ -11,7 +11,15 @@
 <!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Parkinsans:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Palette: navy #2C0D57 · orange #F34D0D · periwinkle #7084F4 · sky #C6D6F7 · cream #F5F2EA · paper #FFFCF6 */
+  /*
+    LAUNCH · 06-open-to-everyone · 2026-10-13
+    Mirrors the Figma frame "LAUNCH · 06-open-to-everyone · REDESIGN" (cream version).
+    Copy to edit is marked with COPY comments.
+
+    Palette: navy #2C0D57 · orange #F34D0D · ink #4B3A78 · muted #6E6390
+             cream #F5F2EA · sand #ECE6D8 · paper #FFFCF6 · dash #C9BFA8
+    Fonts:   Parkinsans SemiBold (headlines) · Onest (body)
+  */
   body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
   table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
   img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; display: block; }
@@ -20,21 +28,20 @@
   @media only screen and (max-width: 620px) {
     .container { width: 100% !important; }
     .px { padding-left: 24px !important; padding-right: 24px !important; }
+    .px-panel { padding-left: 16px !important; padding-right: 16px !important; }
     .stack { display: block !important; width: 100% !important; padding-left: 0 !important; padding-right: 0 !important; }
     .stack-gap { padding: 0 0 14px 0 !important; }
-    .hero-art { padding: 28px 0 0 0 !important; text-align: center !important; }
-    .hero-art img { margin: 0 auto !important; }
-    .hide-sm { display: none !important; }
-    .h1 { font-size: 40px !important; line-height: 44px !important; }
+    .hero-art { padding: 20px 0 0 0 !important; }
+    .h1 { font-size: 38px !important; line-height: 42px !important; }
     .h2 { font-size: 26px !important; line-height: 32px !important; }
     .full { width: 100% !important; height: auto !important; }
-    .panel { padding: 28px 18px !important; }
+    .panel { padding: 28px 20px !important; }
   }
 </style>
 </head>
 <body style="margin:0;padding:0;background:#E9E2D2;">
 
-<!-- Preheader -->
+<!-- COPY: preheader (inbox preview text) -->
 <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#E9E2D2;">
   The Wrapped Glass Bottle is here, from $60 a pair. First run is limited.&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;
 </div>
@@ -49,10 +56,11 @@
     <td class="px" style="padding:28px 40px 0 40px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td align="left" style="font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:26px;line-height:28px;font-weight:600;letter-spacing:3px;color:#2C0D57;">
-            <a href="[[HOME_URL]]" style="color:#2C0D57;text-decoration:none;">RONINI</a>
+          <td align="left" valign="middle">
+            <a href="[[HOME_URL]]" style="text-decoration:none;"><img src="assets/logo.png" width="124" height="25" alt="Ronini" style="width:124px;height:25px;"></a>
           </td>
-          <td align="right" style="font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:16px;font-weight:500;color:#6E6390;letter-spacing:0.5px;">
+          <!-- COPY: header date -->
+          <td align="right" valign="middle" style="font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:16px;font-weight:500;letter-spacing:0.5px;color:#2C0D57;">
             Oct 13 &middot; Launch day
           </td>
         </tr>
@@ -62,71 +70,50 @@
 
   <!-- ============ HERO ============ -->
   <tr>
-    <td class="px" style="padding:36px 40px 0 40px;">
+    <td class="px" style="padding:56px 40px 0 40px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td valign="top" class="stack" width="340">
-            <!-- pill -->
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td style="background:#2C0D57;border-radius:999px;padding:6px 14px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F5F2EA;">
-                  <span style="color:#F34D0D;">&#9679;</span>&nbsp; Now open
-                </td>
-              </tr>
-            </table>
-            <h1 class="h1" style="margin:20px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:44px;line-height:48px;font-weight:600;letter-spacing:-1.2px;color:#2C0D57;">
+          <td valign="bottom" class="stack" width="434">
+            <!-- COPY: headline (the last word sits in the orange span) -->
+            <h1 class="h1" style="margin:0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:44px;line-height:48px;font-weight:600;letter-spacing:-1.2px;color:#2C0D57;">
               Meet your<br>everyday <span style="color:#F34D0D;">pair.</span>
             </h1>
+            <!-- COPY: hero body -->
             <p style="margin:18px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:16px;line-height:25px;color:#4B3A78;">
-              Glass where the milk goes. Silicone around the outside, molded on so it stays put for washing. The Wrapped Glass Bottle is now available, from <strong style="color:#2C0D57;">$60 a pair</strong>.
+              Glass where the milk goes. Silicone around the outside, molded on so it stays put for washing. The Wrapped Glass Bottle is now available, from <strong style="color:#2C0D57;font-weight:700;">$60 a pair</strong>.
             </p>
-            <!-- CTA -->
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:26px;">
               <tr>
                 <td align="center" bgcolor="#F34D0D" style="border-radius:999px;">
+                  <!-- COPY: hero button -->
                   <a href="[[SHOP_URL]]" style="display:inline-block;padding:16px 30px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;font-weight:700;color:#FFFCF6;text-decoration:none;border-radius:999px;">Choose your bottles &rarr;</a>
                 </td>
               </tr>
             </table>
           </td>
           <td valign="bottom" align="right" class="stack hero-art" style="padding-left:12px;">
-            <img src="assets/walker.png" width="170" height="191" alt="An orange Ronini character, mid-stride" style="width:170px;height:191px;">
+            <img src="assets/walker.png" width="74" height="83" alt="" style="width:74px;height:83px;display:inline-block;">
           </td>
         </tr>
       </table>
-    </td>
-  </tr>
-
-  <!-- Characters band -->
-  <tr>
-    <td style="padding:40px 24px 0 24px;line-height:0;font-size:0;">
-      <img src="assets/strip-gradient.png" width="552" height="123" alt="The Ronini letters, drawn as friendly characters holding hands" class="full" style="width:552px;height:123px;">
     </td>
   </tr>
 
   <!-- ============ PRODUCT PHOTO ============ -->
   <tr>
     <td class="px" style="padding:40px 40px 0 40px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td style="border-radius:24px;overflow:hidden;background:#C6D6F7;line-height:0;font-size:0;">
-            <a href="[[SHOP_URL]]"><img src="[[PRODUCT_IMAGE_URL]]" width="520" alt="A hand holding the Ronini Wrapped Glass Bottle with its orange silicone sleeve" class="full" style="width:520px;max-width:100%;height:auto;border-radius:24px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#2C0D57;"></a>
-          </td>
-        </tr>
-      </table>
+      <a href="[[SHOP_URL]]"><img src="[[PRODUCT_IMAGE_URL]]" width="520" height="578" alt="A hand holding the Ronini Wrapped Glass Bottle with its orange silicone sleeve" class="full" style="width:520px;height:578px;border-radius:24px;background:#C6D6F7;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#2C0D57;"></a>
     </td>
   </tr>
 
   <!-- ============ LIMITED RUN NOTE ============ -->
   <tr>
     <td class="px" style="padding:18px 40px 0 40px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FFFCF6;border:2px solid #2C0D57;border-radius:18px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ECE6D8;border-radius:18px;">
         <tr>
-          <td width="14" valign="top" style="padding:20px 0 0 20px;">
-            <div style="width:12px;height:12px;border-radius:12px;background:#F34D0D;font-size:0;line-height:0;">&nbsp;</div>
-          </td>
-          <td valign="top" style="padding:14px 20px 16px 12px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#2C0D57;">
-            <strong>The first run is limited.</strong> If your size runs out, you can still order, and you&rsquo;ll see the ship dates before you pay.
+          <!-- COPY: limited run note -->
+          <td style="padding:16px 20px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#2C0D57;">
+            <strong style="font-weight:700;">The first run is limited.</strong> If your size runs out, you can still order, and you&rsquo;ll see the ship dates before you pay.
           </td>
         </tr>
       </table>
@@ -135,36 +122,37 @@
 
   <!-- ============ SIZES (gradient panel + arch cards) ============ -->
   <tr>
-    <td class="px" style="padding:48px 24px 0 24px;">
+    <td class="px-panel" style="padding:48px 24px 0 24px;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#A9B6F4;background-image:linear-gradient(160deg,#D3DCF9 0%,#A9B6F4 50%,#8494F0 100%);border-radius:28px;">
         <tr>
           <td class="panel" style="padding:36px 32px 32px 32px;">
+            <!-- COPY: sizes eyebrow + headline -->
             <p style="margin:0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2C0D57;">Wrapped Glass two-packs</p>
             <h2 class="h2" style="margin:10px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:30px;line-height:36px;font-weight:600;letter-spacing:-0.6px;color:#2C0D57;">Two bottles.<br>Your choice of size.</h2>
 
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:26px;">
               <tr>
-                <!-- 5 oz -->
+                <!-- COPY: 5 oz card -->
                 <td class="stack stack-gap" width="50%" valign="top" style="padding-right:8px;">
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F34D0D;background-image:linear-gradient(180deg,#F34D0D 0%,#F4652F 55%,#F9B79E 100%);border:2px solid #2C0D57;border-radius:130px 130px 18px 18px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F34D0D;background-image:linear-gradient(180deg,#F34D0D 0%,#F4652F 55%,#F9B79E 100%);border:2px solid #2C0D57;border-radius:118px 118px 18px 18px;">
                     <tr>
                       <td align="center" style="padding:58px 16px 30px 16px;">
-                        <p style="margin:0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:20px;line-height:24px;font-weight:700;color:#2C0D57;">5 oz</p>
+                        <p style="margin:0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:20px;line-height:24px;font-weight:600;color:#2C0D57;">5 oz</p>
                         <p style="margin:2px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:18px;color:#FFFCF6;">160 ml</p>
-                        <p style="margin:22px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:42px;line-height:44px;font-weight:600;letter-spacing:-1.2px;color:#2C0D57;">$60</p>
+                        <p style="margin:20px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:42px;line-height:44px;font-weight:600;letter-spacing:-1.2px;color:#2C0D57;">$60</p>
                         <p style="margin:2px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:13px;line-height:18px;font-weight:500;color:#2C0D57;">per pair</p>
                       </td>
                     </tr>
                   </table>
                 </td>
-                <!-- 8 oz -->
+                <!-- COPY: 8 oz card -->
                 <td class="stack" width="50%" valign="top" style="padding-left:8px;">
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F34D0D;background-image:linear-gradient(180deg,#F34D0D 0%,#F4652F 55%,#F9B79E 100%);border:2px solid #2C0D57;border-radius:130px 130px 18px 18px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F34D0D;background-image:linear-gradient(180deg,#F34D0D 0%,#F4652F 55%,#F9B79E 100%);border:2px solid #2C0D57;border-radius:118px 118px 18px 18px;">
                     <tr>
                       <td align="center" style="padding:58px 16px 30px 16px;">
-                        <p style="margin:0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:20px;line-height:24px;font-weight:700;color:#2C0D57;">8 oz</p>
+                        <p style="margin:0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:20px;line-height:24px;font-weight:600;color:#2C0D57;">8 oz</p>
                         <p style="margin:2px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:18px;color:#FFFCF6;">240 ml</p>
-                        <p style="margin:22px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:42px;line-height:44px;font-weight:600;letter-spacing:-1.2px;color:#2C0D57;">$64</p>
+                        <p style="margin:20px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:42px;line-height:44px;font-weight:600;letter-spacing:-1.2px;color:#2C0D57;">$64</p>
                         <p style="margin:2px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:13px;line-height:18px;font-weight:500;color:#2C0D57;">per pair</p>
                       </td>
                     </tr>
@@ -173,12 +161,14 @@
               </tr>
             </table>
 
+            <!-- COPY: price note -->
             <p style="margin:16px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:18px;color:#2C0D57;">
               Regular one-time pair prices, before any eligible offer. Bottles are sold in pairs.
             </p>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:22px;">
               <tr>
                 <td align="center" bgcolor="#2C0D57" style="border-radius:999px;">
+                  <!-- COPY: sizes button -->
                   <a href="[[SHOP_URL]]" style="display:block;padding:17px 24px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;font-weight:700;color:#FFFCF6;text-decoration:none;border-radius:999px;">Shop the Wrapped Glass Bottle &rarr;</a>
                 </td>
               </tr>
@@ -192,25 +182,17 @@
   <!-- ============ REASSURANCE ============ -->
   <tr>
     <td class="px" style="padding:48px 40px 0 40px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ECE6D8;border-radius:24px 24px 24px 6px;">
         <tr>
-          <td width="110" valign="bottom" class="hide-sm" style="padding-right:16px;">
-            <img src="assets/r-walker.png" width="94" height="160" alt="" style="width:94px;height:160px;">
-          </td>
-          <td valign="bottom">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FFFCF6;border:2px solid #2C0D57;border-radius:24px 24px 24px 6px;">
-              <tr>
-                <td style="padding:22px 24px 24px 24px;">
-                  <h3 style="margin:0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:19px;line-height:25px;font-weight:600;color:#2C0D57;">What if my baby doesn&rsquo;t take to it?</h3>
-                  <p style="margin:8px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#4B3A78;">
-                    Reply to us. We&rsquo;ll help with setup and flow questions. If it still isn&rsquo;t a fit, we&rsquo;ll walk you through the options in our returns policy.
-                  </p>
-                  <p style="margin:12px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;font-weight:700;">
-                    <a href="[[RETURNS_URL]]" style="color:#F34D0D;text-decoration:underline;">Read the support &amp; returns policy &rarr;</a>
-                  </p>
-                </td>
-              </tr>
-            </table>
+          <td style="padding:22px 24px 24px 24px;">
+            <!-- COPY: FAQ -->
+            <h3 style="margin:0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:19px;line-height:25px;font-weight:600;color:#2C0D57;">What if my baby doesn&rsquo;t take to it?</h3>
+            <p style="margin:8px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#4B3A78;">
+              Reply to us. We&rsquo;ll help with setup and flow questions. If it still isn&rsquo;t a fit, we&rsquo;ll walk you through the options in our returns policy.
+            </p>
+            <p style="margin:8px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;font-weight:700;">
+              <a href="[[RETURNS_URL]]" style="color:#F34D0D;text-decoration:underline;">Read the support &amp; returns policy &rarr;</a>
+            </p>
           </td>
         </tr>
       </table>
@@ -220,7 +202,8 @@
   <!-- ============ DETAILS ============ -->
   <tr>
     <td class="px" style="padding:44px 40px 0 40px;">
-      <p style="margin:0 0 6px 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F34D0D;">The details</p>
+      <p style="margin:0 0 6px 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#2C0D57;">The details</p>
+      <!-- COPY: details rows -->
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-family:'Onest',Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#2C0D57;">
         <tr>
           <td width="120" valign="top" style="padding:12px 0;border-bottom:1px dashed #C9BFA8;font-weight:700;">Shipping</td>
@@ -240,15 +223,20 @@
 
   <!-- ============ TWO-WAY STREET ============ -->
   <tr>
-    <td class="px" align="center" style="padding:56px 40px 48px 40px;">
-      <img src="assets/bubble-wordmark.png" width="200" height="59" alt="" style="width:200px;height:59px;margin:0 auto;">
-      <h3 class="h2" style="margin:24px 0 0 0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:26px;line-height:32px;font-weight:600;letter-spacing:-0.5px;color:#2C0D57;">And this inbox is a two-way street.</h3>
-      <p style="margin:10px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;color:#4B3A78;">
-        Reply anytime, a person answers.
-      </p>
-      <p style="margin:6px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;font-weight:700;">
+    <td class="px" align="center" style="padding:80px 40px 48px 40px;">
+      <!-- COPY: sign-off -->
+      <h3 class="h2" style="margin:0;font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:26px;line-height:32px;font-weight:600;letter-spacing:-0.5px;color:#2C0D57;text-align:center;">And this inbox is a two-way street.</h3>
+      <p style="margin:10px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;color:#4B3A78;text-align:center;">Reply anytime, a person answers.</p>
+      <p style="margin:6px 0 0 0;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:15px;line-height:22px;font-weight:700;text-align:center;">
         <a href="mailto:hi@ronini.com" style="color:#F34D0D;text-decoration:underline;">hi@ronini.com</a>
       </p>
+    </td>
+  </tr>
+
+  <!-- Character band (full bleed) -->
+  <tr>
+    <td style="padding:0;line-height:0;font-size:0;">
+      <img src="assets/character-band.png" width="600" height="89" alt="The Ronini letters, drawn as friendly characters holding hands" class="full" style="width:600px;height:89px;">
     </td>
   </tr>
 
@@ -257,8 +245,10 @@
     <td class="px" style="padding:32px 40px 36px 40px;background:#ECE6D8;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td align="left" style="font-family:'Parkinsans',Helvetica,Arial,sans-serif;font-size:22px;line-height:24px;font-weight:600;letter-spacing:3px;color:#F34D0D;">RONINI</td>
-          <td align="right" style="font-family:'Onest',Helvetica,Arial,sans-serif;font-size:13px;line-height:16px;font-weight:700;">
+          <td align="left" valign="middle">
+            <img src="assets/logo.png" width="112" height="23" alt="Ronini" style="width:112px;height:23px;">
+          </td>
+          <td align="right" valign="middle">
             <a href="[[INSTAGRAM_URL]]" style="text-decoration:none;display:inline-block;"><img src="assets/instagram.png" width="28" height="28" alt="Instagram" style="width:28px;height:28px;display:inline-block;"></a>
           </td>
         </tr>
@@ -267,12 +257,13 @@
         </tr>
         <tr>
           <td colspan="2" style="padding-top:18px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:13px;line-height:18px;">
-            <a href="[[PREFERENCES_URL]]" style="color:#2C0D57;text-decoration:underline;">Manage preferences</a>&nbsp;&nbsp;&nbsp;
-            <a href="[[UNSUBSCRIBE_URL]]" style="color:#2C0D57;text-decoration:underline;">Unsubscribe</a>&nbsp;&nbsp;&nbsp;
+            <a href="[[PREFERENCES_URL]]" style="color:#2C0D57;text-decoration:underline;">Manage preferences</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="[[UNSUBSCRIBE_URL]]" style="color:#2C0D57;text-decoration:underline;">Unsubscribe</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="mailto:hi@ronini.com" style="color:#2C0D57;text-decoration:underline;">Email us</a>
           </td>
         </tr>
         <tr>
+          <!-- COPY: legal footer -->
           <td colspan="2" style="padding-top:16px;font-family:'Onest',Helvetica,Arial,sans-serif;font-size:11px;line-height:17px;color:#6E6390;">
             Ronini Inc. 2460 Lemoine Ave, Suite 407 #1013, Fort Lee, NJ 07024<br>
             &copy; 2026 Ronini Inc. All rights reserved.
