@@ -96,25 +96,18 @@ def coupon_card():
   </tr>'''
 
 
-def arch_card(oz, ml, price, pad_side, bottle, bh):
-    # Paper arch with the bottle in a pale "window" beside size + price.
-    wh = 138  # same window height for both sizes so the cards line up
+def arch_card(oz, ml, price, pad_side, bottle):
+    # The arch frames the bottle: soft periwinkle sky at the top fading into paper,
+    # bottle standing on its own shadow, size + price centered underneath.
     return f'''<td width="50%" valign="top" style="padding-{pad_side}:8px;">
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAPER}" style="background:{PAPER};border:2px solid {NAVY};border-radius:118px 118px 18px 18px;border-collapse:separate;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAPER}" style="background-color:{PAPER};background-image:linear-gradient(180deg,#E4E9FF 0%,{PAPER} 62%,{PAPER} 100%);border:1.5px solid {NAVY};border-radius:118px 118px 18px 18px;border-collapse:separate;">
                     <tr>
-                      <td align="center" style="padding:50px 12px 26px 12px;">
-                        <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;border-collapse:separate;"><tr>
-                          <td align="center" valign="middle" width="72" height="{wh}" bgcolor="{SKY}" style="width:72px;height:{wh}px;background-color:{SKY};background-image:linear-gradient(90deg,{SKY} 0%,#F3EEFF 100%);border-radius:36px 36px 10px 10px;">
-                            <img src="{bottle}" width="62" height="{bh}" alt="{oz} Wrapped Glass Bottle" style="width:62px;height:{bh}px;margin:0 auto;"/>
-                          </td>
-                          <td width="12" style="width:12px;font-size:0;line-height:0;">&nbsp;</td>
-                          <td align="center" valign="middle" style="text-align:center;">
-                            <p style="{H}font-size:20px;line-height:24px;color:{NAVY};">{oz}</p>
-                            <p style="margin-top:2px;{B}font-size:14px;line-height:18px;color:{INK};">{ml}</p>
-                            <p class="price" style="margin-top:12px;{H}font-size:40px;line-height:42px;letter-spacing:-1.2px;color:{ORANGE};">{price}</p>
-                            <p style="margin-top:2px;{B}font-weight:600;font-size:13px;line-height:18px;color:{NAVY};white-space:nowrap;">per pair</p>
-                          </td>
-                        </tr></table>
+                      <td align="center" style="padding:26px 12px 24px 12px;text-align:center;">
+                        <img src="{bottle}" width="120" height="174" alt="{oz} Wrapped Glass Bottle" style="width:120px;height:174px;margin:0 auto;"/>
+                        <p style="padding-top:8px;{H}font-size:20px;line-height:24px;color:{NAVY};text-align:center;">{oz}</p>
+                        <p style="margin-top:2px;{B}font-size:14px;line-height:18px;color:{INK};text-align:center;">{ml}</p>
+                        <p class="price" style="margin-top:10px;{H}font-size:42px;line-height:44px;letter-spacing:-1.2px;color:{ORANGE};text-align:center;">{price}</p>
+                        <p style="margin-top:2px;{B}font-weight:600;font-size:13px;line-height:18px;color:{NAVY};white-space:nowrap;text-align:center;">per pair</p>
                       </td>
                     </tr>
                   </table>
@@ -159,7 +152,7 @@ a {{color:{NAVY}}}
   .panel {{padding:28px 18px !important}}
   .card {{padding:24px 20px !important}}
   .codef {{font-size:18px !important;line-height:26px !important}}
-  .price {{font-size:30px !important;line-height:34px !important}}
+  .price {{font-size:34px !important;line-height:38px !important}}
 }}
 </style>
 </head>
@@ -208,8 +201,8 @@ a {{color:{NAVY}}}
         <tr>
           <td class="panel" style="padding:32px 32px 32px 32px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-              {arch_card("5 oz", "160 ml", "$60", "right", BOTTLE_5, 104)}
-              {arch_card("8 oz", "240 ml", "$64", "left", BOTTLE_8, 124)}
+              {arch_card("5 oz", "160 ml", "$60", "right", BOTTLE_5)}
+              {arch_card("8 oz", "240 ml", "$64", "left", BOTTLE_8)}
             </tr></table>
             <p style="padding-top:16px;{B}font-size:12px;line-height:18px;color:{NAVY};">{v["price_note"]}</p>
             <div style="padding-top:22px;">{button(v["cta_label"], v["cta_url"], NAVY, "#FFFFFF", full=True)}</div>
