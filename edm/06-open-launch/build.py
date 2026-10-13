@@ -14,10 +14,11 @@ PHOTO = "https://cdn.klaviyomail.com/company/RLiMzU/images/6bc3749b-e3ac-4578-ad
 BAND = "https://cdn.klaviyomail.com/company/RLiMzU/images/9ab928b8-7b72-4281-92cf-8c1b9cb19010.jpeg"
 HELPER = "https://cdn.klaviyomail.com/company/RLiMzU/images/d986a5b7-bd54-4cba-965f-6c3d205ced5b.png"
 INSTAGRAM = "https://cdn.klaviyomail.com/company/RLiMzU/images/50e6aefb-d99f-424f-8c97-2724fa1f0f90.png"
-# New assets: upload assets/bottle-5oz.png, bottle-8oz.png, burst-10.png to Klaviyo and paste their URLs here
+# New assets: upload assets/bottle-5oz.png, bottle-8oz.png, burst-10.png, venting-tube.png to Klaviyo and paste their URLs here
 BOTTLE_5 = "assets/bottle-5oz.png"
 BOTTLE_8 = "assets/bottle-8oz.png"
 BURST_10 = "assets/burst-10.png"
+TUBE = "assets/venting-tube.png"
 
 PRODUCT_URL = "https://ronini.com/products/the-ronini-wrapped-glass-bottle"
 DISCOUNT_URL = "https://ronini.com/discount/{% coupon_code 'EARLY15' %}?redirect=%2Fproducts%2Fthe-ronini-wrapped-glass-bottle"
@@ -79,6 +80,10 @@ def coupon_card():
                   <td width="12" height="12" bgcolor="{NAVY}" style="width:12px;height:12px;background:{NAVY};border-radius:999px;font-size:0;line-height:0;">&nbsp;</td>
                 </tr></table>
               </td>
+              <td width="10" style="width:10px;font-size:0;line-height:0;">&nbsp;</td>
+              <td valign="middle" style="{H}font-size:26px;line-height:26px;color:{NAVY};">+</td>
+              <td width="8" style="width:8px;font-size:0;line-height:0;">&nbsp;</td>
+              <td valign="middle" width="56"><img src="{TUBE}" width="56" height="103" alt="Free Venting Tube" style="width:56px;height:103px;"/></td>
             </tr></table>
             <p style="padding-top:14px;{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{PERI};text-align:center;">For the waitlist</p>
             <h3 style="padding-top:6px;{H}font-size:22px;line-height:28px;color:{NAVY};text-align:center;">Your waitlist thank-you</h3>
