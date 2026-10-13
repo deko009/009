@@ -58,34 +58,26 @@ def button(label, url, bg, fg, full=False, border=None):
 
 
 def coupon_card():
-    # Ticket-style card: navy body, cream code slot with an orange dashed edge.
+    # Light ticket-style card, centered: 15% badge, title, offer, dashed code slot, terms.
     return f'''
   <!-- ============ WAITLIST THANK-YOU (waitlist only) ============ -->
   <tr>
     <td class="px" style="padding:32px 40px 0 40px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{NAVY}" style="background:{NAVY};border-radius:24px;border-collapse:separate;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{SKY}" style="background:{SKY};border:2px solid {NAVY};border-radius:24px;border-collapse:separate;">
         <tr>
-          <td class="card" style="padding:28px 28px 26px 28px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td valign="middle">
-                  <p style="{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#CDDDFF;">For the waitlist</p>
-                  <h3 style="margin:6px 0 0 0;{H}font-size:22px;line-height:28px;color:{PAPER};">Your waitlist thank-you</h3>
-                </td>
-                <td valign="middle" align="right" width="64" style="width:64px;">
-                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr>
-                    <td align="center" valign="middle" width="64" height="64" bgcolor="{ORANGE}" style="width:64px;height:64px;background:{ORANGE};border-radius:999px;{H}font-size:18px;line-height:20px;color:{PAPER};">15%</td>
-                  </tr></table>
-                </td>
-              </tr>
-            </table>
-            <p style="padding-top:12px;{B}font-size:15px;line-height:23px;color:#E6E0F0;">15% off your first order, plus a free Venting&nbsp;Tube&nbsp;2-pack.</p>
+          <td class="card" align="center" style="padding:28px 28px 26px 28px;text-align:center;">
+            <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;border-collapse:separate;"><tr>
+              <td align="center" valign="middle" width="64" height="64" bgcolor="{ORANGE}" style="width:64px;height:64px;background:{ORANGE};border-radius:999px;{H}font-size:18px;line-height:20px;color:{PAPER};text-align:center;">15%</td>
+            </tr></table>
+            <p style="padding-top:14px;{B}font-weight:600;font-size:12px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{PERI};text-align:center;">For the waitlist</p>
+            <h3 style="padding-top:6px;{H}font-size:22px;line-height:28px;color:{NAVY};text-align:center;">Your waitlist thank-you</h3>
+            <p style="padding-top:12px;{B}font-size:15px;line-height:23px;color:{INK};text-align:center;">15% off your first order, plus a free Venting&nbsp;Tube&nbsp;2-pack.</p>
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{PAPER}" style="margin-top:18px;background:{PAPER};border:2px dashed {ORANGE};border-radius:14px;border-collapse:separate;">
               <tr>
-                <td align="center" class="codef" style="padding:16px 18px;{B}font-weight:600;font-size:22px;line-height:30px;letter-spacing:1px;color:{NAVY};word-break:break-all;">{{% coupon_code 'EARLY15' %}}</td>
+                <td align="center" class="codef" style="padding:16px 18px;{B}font-weight:600;font-size:22px;line-height:30px;letter-spacing:1px;color:{NAVY};word-break:break-all;text-align:center;">{{% coupon_code 'EARLY15' %}}</td>
               </tr>
             </table>
-            <p style="padding-top:16px;{B}font-size:12px;line-height:18px;color:#CFC4DE;">Use it once, through Sunday, October 18 at 11:59 pm ET. It stacks with the 10% subscription savings. The Venting Tube is sized for the 5 oz bottle; in the 8 oz, fill to 5&nbsp;oz or&nbsp;less.</p>
+            <p style="padding-top:16px;{B}font-size:12px;line-height:18px;color:{INK};text-align:center;">Use it once, through Sunday, October 18 at 11:59 pm ET. It stacks with the 10% subscription savings. The Venting Tube is sized for the 5 oz bottle; in the 8 oz, fill to 5&nbsp;oz or&nbsp;less.</p>
           </td>
         </tr>
       </table>
@@ -166,20 +158,14 @@ a {{color:{NAVY}}}
 
   <!-- ============ HERO ============ -->
   <tr>
-    <td class="px" style="padding:48px 40px 0 40px;">
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr>
+    <td class="px" align="center" style="padding:40px 40px 0 40px;text-align:center;">
+      <img src="{WALKER}" width="96" height="108" alt="" style="width:96px;height:108px;margin:0 auto;"/>
+      <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:18px auto 0 auto;border-collapse:separate;"><tr>
         <td bgcolor="{NAVY}" style="background:{NAVY};border-radius:999px;padding:6px 14px;{B}font-weight:600;font-size:12px;line-height:14px;letter-spacing:1px;text-transform:uppercase;color:{PAPER};"><span style="color:{ORANGE};">&#9679;</span>&nbsp; Open to everyone</td>
       </tr></table>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;"><tr>
-        <td valign="bottom" class="stack">
-          <h1 class="h1" style="{H}font-size:52px;line-height:54px;letter-spacing:-1.6px;color:{NAVY};">Ronini is <span style="color:{ORANGE};">open.</span></h1>
-          <p style="padding-top:18px;{B}font-size:16px;line-height:25px;color:{INK};">{v["intro"]}</p>
-          <div style="padding-top:26px;">{button(v["cta_label"], v["cta_url"], ORANGE, "#FFFFFF")}</div>
-        </td>
-        <td valign="bottom" align="right" width="96" class="hide-sm" style="width:96px;padding-left:12px;">
-          <img src="{WALKER}" width="84" height="94" alt="" style="width:84px;height:94px;display:inline-block;"/>
-        </td>
-      </tr></table>
+      <h1 class="h1" style="padding-top:18px;{H}font-size:52px;line-height:54px;letter-spacing:-1.6px;color:{NAVY};text-align:center;">Ronini is <span style="color:{ORANGE};">open.</span></h1>
+      <p style="padding-top:18px;{B}font-size:16px;line-height:25px;color:{INK};text-align:center;">{v["intro"]}</p>
+      <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:26px auto 0 auto;"><tr><td>{button(v["cta_label"], v["cta_url"], ORANGE, "#FFFFFF")}</td></tr></table>
     </td>
   </tr>
 {coupon}
