@@ -1,6 +1,10 @@
+# 以下都是你的本地数据，永远不会上传到 GitHub
 accounts/*
 !accounts/.gitkeep
 materials/*
 !materials/.gitkeep
+posts/*
+!posts/example/
+posts/example/*
+!posts/example/post.json
 __pycache__/
-posts/*/published.json
