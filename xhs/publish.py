@@ -15,11 +15,13 @@
 import argparse
 import json
 import random
+import subprocess
 import time
 from datetime import datetime
 from pathlib import Path
 
 from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeout
 
 ROOT = Path(__file__).resolve().parent.parent
 ACCOUNTS = ROOT / "accounts"
@@ -29,6 +31,18 @@ LOGIN_URL = "https://creator.xiaohongshu.com/login"
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
 TITLE_MAX = 20
 BODY_MAX = 1000
+
+
+def copy_to_clipboard(meta: dict) -> bool:
+    """把正文和话题复制到系统剪贴板（Mac 用 pbcopy，Windows 用 clip）。"""
+    text = meta.get("body", "") + "\n\n" + " ".join(f"#{t}" for t in meta.get("tags", []))
+    for cmd in (["pbcopy"], ["clip"]):
+        try:
+            subprocess.run(cmd, input=text.encode("utf-16" if cmd == ["clip"] else "utf-8"), check=True)
+            return True
+        except (OSError, subprocess.CalledProcessError):
+            continue
+    return False
 
 
 def human_pause(lo=0.8, hi=2.0):
@@ -64,14 +78,24 @@ def load_post(post_dir: Path) -> dict:
 
 
 def fill_post(page: Page, meta: dict):
-    page.goto(PUBLISH_URL)
-    page.wait_for_load_state("networkidle")
-    if "login" in page.url:
-        raise RuntimeError("未登录或登录已过期，请先运行 login")
+    # 小红书页面会一直在后台请求数据，不能等 networkidle，改为等具体元素出现
+    page.goto(PUBLISH_URL, wait_until="domcontentloaded", timeout=60_000)
+    upload_tab = page.locator("text=上传图文 >> visible=true").first
+    try:
+        upload_tab.wait_for(timeout=60_000)
+    except PlaywrightTimeout:
+        if "login" in page.url:
+            raise RuntimeError("这个账号没登录或登录已过期，请先运行 2-登录账号 扫码")
+        raise RuntimeError("60 秒内没找到「上传图文」按钮")
+    upload_tab.click()
+    human_pause(1.5, 2.5)
 
-    page.get_by_text("上传图文", exact=True).first.click()
-    human_pause()
-    page.locator("input[type=file]").first.set_input_files([str(p) for p in meta["images"]])
+    # 优先选接受图片的上传框，避免选到视频上传框
+    file_input = page.locator("input[type=file][accept*='image'], input[type=file][accept*='jpg'], "
+                              "input[type=file][accept*='png'], input[type=file][accept*='webp']")
+    if file_input.count() == 0:
+        file_input = page.locator("input[type=file]")
+    file_input.first.set_input_files([str(p) for p in meta["images"]])
     # 等待上传完成：标题输入框出现
     title = page.locator("input[placeholder*='标题']").first
     title.wait_for(timeout=120_000)
@@ -99,7 +123,23 @@ def publish_post(post_dir: Path, account: str | None, auto: bool) -> bool:
     with sync_playwright() as pw:
         ctx = open_context(pw, account)
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
-        fill_post(page, meta)
+        try:
+            fill_post(page, meta)
+        except Exception as e:
+            # 自动填写失败时不关浏览器，让用户在同一个窗口手动接着发
+            shot = post_dir / "error.png"
+            try:
+                page.screenshot(path=str(shot))
+            except Exception:
+                pass
+            copied = copy_to_clipboard(meta)
+            print(f"\n[{account}] 自动填写卡住了：{e}")
+            print(f"出错时的页面截图：{shot}（发给 Claude 可以帮你修）")
+            if copied:
+                print("正文和话题已复制到剪贴板，可以直接在浏览器里粘贴。")
+            input("请在打开的浏览器里手动完成剩下的步骤，发完后按回车关闭...")
+            ctx.close()
+            return False
         if auto:
             page.get_by_role("button", name="发布").last.click()
             page.wait_for_timeout(5000)
