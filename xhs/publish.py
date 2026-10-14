@@ -4,8 +4,8 @@
 
 用法:
     python -m xhs.publish login 账号A                 # 打开浏览器扫码登录，登录后关闭窗口即可
-    python -m xhs.publish post posts/example          # 发布单篇（账号取 post.json 的 account）
-    python -m xhs.publish post posts/example --auto   # 自动点击“发布”（默认填好后等你人工确认）
+    python -m xhs.publish post posts/example          # 自动填好，最后在终端输入 y 确认发布
+    python -m xhs.publish post posts/example --auto   # 不询问，直接发布
     python -m xhs.publish run                         # 按队列发布 posts/ 下所有未发布的帖子
 
 帖子目录结构:
@@ -151,13 +151,21 @@ def publish_post(post_dir: Path, account: str | None, auto: bool) -> bool:
             input("请在打开的浏览器里手动完成剩下的步骤，发完后按回车关闭...")
             ctx.close()
             return False
-        if auto:
-            page.get_by_role("button", name="发布").last.click()
-            page.wait_for_timeout(5000)
+        if not auto:
+            print(f"\n[{account}] 已填好《{meta['title']}》，请在浏览器里检查一遍。")
+            answer = input("确认发布吗？输入 y 按回车＝自动点发布；直接按回车＝不发布：").strip().lower()
+            if answer != "y":
+                print("已取消，没有发布。")
+                ctx.close()
+                return False
+        try:
+            page.locator("button:has-text('发布') >> visible=true").last.click(timeout=15_000)
+            page.wait_for_timeout(6000)
             ok = "success" in page.url or page.get_by_text("发布成功").count() > 0
-        else:
-            input(f"[{account}] 已填好《{meta['title']}》，请在浏览器检查并手动点“发布”，完成后按回车...")
-            ok = True
+        except PlaywrightTimeout:
+            ok = False
+        if not ok:
+            input("没能确认发布成功，请看一眼浏览器：如果还没发，手动点「发布」；看完按回车关闭...")
         ctx.close()
 
     if ok:
