@@ -82,17 +82,28 @@ def fill_post(page: Page, meta: dict):
     page.goto(PUBLISH_URL, wait_until="domcontentloaded", timeout=60_000)
     upload_tab = page.locator("text=上传图文 >> visible=true").first
     try:
-        upload_tab.wait_for(timeout=60_000)
+        upload_tab.wait_for(timeout=15_000)
     except PlaywrightTimeout:
         if "login" in page.url:
             raise RuntimeError("这个账号没登录或登录已过期，请先运行 2-登录账号 扫码")
-        raise RuntimeError("60 秒内没找到「上传图文」按钮")
-    upload_tab.click()
-    human_pause(1.5, 2.5)
-
+        # 平台改版后发布页地址可能会跳到别处，改为像人一样点左上角「发布笔记」进入
+        page.locator("text=发布笔记 >> visible=true").first.click(timeout=30_000)
+        try:
+            upload_tab.wait_for(timeout=30_000)
+        except PlaywrightTimeout:
+            raise RuntimeError("点了「发布笔记」后没找到「上传图文」")
     # 优先选接受图片的上传框，避免选到视频上传框
     file_input = page.locator("input[type=file][accept*='image'], input[type=file][accept*='jpg'], "
                               "input[type=file][accept*='png'], input[type=file][accept*='webp']")
+    # 下拉菜单里的「上传图文」可能先跳到发布页，发布页上还要再点一次「上传图文」标签
+    for _ in range(3):
+        upload_tab.click()
+        human_pause(1.5, 2.5)
+        try:
+            file_input.first.wait_for(state="attached", timeout=8_000)
+            break
+        except PlaywrightTimeout:
+            upload_tab = page.locator("text=上传图文 >> visible=true").first
     if file_input.count() == 0:
         file_input = page.locator("input[type=file]")
     file_input.first.set_input_files([str(p) for p in meta["images"]])
