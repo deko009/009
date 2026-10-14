@@ -4,7 +4,7 @@
 
 用法:
     python -m xhs.publish login 账号A                 # 打开浏览器扫码登录，登录后关闭窗口即可
-    python -m xhs.publish post posts/example          # 自动填好，最后在终端输入 y 确认发布
+    python -m xhs.publish post posts/example          # 自动填好，你在浏览器里点「发布」
     python -m xhs.publish post posts/example --auto   # 不询问，直接发布
     python -m xhs.publish run                         # 按队列发布 posts/ 下所有未发布的帖子
 
@@ -77,35 +77,54 @@ def load_post(post_dir: Path) -> dict:
     return meta
 
 
+def click_onscreen(page: Page, text: str, timeout_ms: int = 30_000) -> bool:
+    """点击屏幕范围内显示着 text 的元素。
+
+    小红书页面里藏着一份放在屏幕外的同名标签，直接点第一个会一直报
+    "element is outside of the viewport"，所以要挑坐标落在窗口里的那个。
+    """
+    deadline = time.time() + timeout_ms / 1000
+    while time.time() < deadline:
+        vw = page.viewport_size or page.evaluate("({width: innerWidth, height: innerHeight})")
+        candidates = page.get_by_text(text, exact=True)
+        for i in range(candidates.count()):
+            el = candidates.nth(i)
+            try:
+                box = el.bounding_box()
+            except Exception:
+                box = None
+            if box and box["width"] > 0 and box["x"] >= 0 and box["y"] >= 0 \
+                    and box["x"] + box["width"] <= vw["width"] and box["y"] + box["height"] <= vw["height"]:
+                page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+                return True
+        page.wait_for_timeout(500)
+    return False
+
+
 def fill_post(page: Page, meta: dict):
     # 小红书页面会一直在后台请求数据，不能等 networkidle，改为等具体元素出现
     page.goto(PUBLISH_URL, wait_until="domcontentloaded", timeout=60_000)
-    upload_tab = page.locator("text=上传图文 >> visible=true").first
-    try:
-        upload_tab.wait_for(timeout=15_000)
-    except PlaywrightTimeout:
-        if "login" in page.url:
-            raise RuntimeError("这个账号没登录或登录已过期，请先运行 2-登录账号 扫码")
-        # 平台改版后发布页地址可能会跳到别处，改为像人一样点左上角「发布笔记」进入
-        page.locator("text=发布笔记 >> visible=true").first.click(timeout=30_000)
-        try:
-            upload_tab.wait_for(timeout=30_000)
-        except PlaywrightTimeout:
-            raise RuntimeError("点了「发布笔记」后没找到「上传图文」")
+    page.wait_for_timeout(3000)
+    if "login" in page.url:
+        raise RuntimeError("这个账号没登录或登录已过期，请先运行 2-登录账号 扫码")
     # 优先选接受图片的上传框，避免选到视频上传框
     file_input = page.locator("input[type=file][accept*='image'], input[type=file][accept*='jpg'], "
                               "input[type=file][accept*='png'], input[type=file][accept*='webp']")
-    # 下拉菜单里的「上传图文」可能先跳到发布页，发布页上还要再点一次「上传图文」标签
+    # 发布页默认停在「上传视频」，要点屏幕上的「上传图文」标签；
+    # 平台改版后地址可能跳到别处，那就先点左上角「发布笔记」
     for _ in range(3):
-        upload_tab.click()
+        if not click_onscreen(page, "上传图文", timeout_ms=10_000):
+            click_onscreen(page, "发布笔记", timeout_ms=10_000)
+            human_pause(1.5, 2.5)
+            continue
         human_pause(1.5, 2.5)
         try:
             file_input.first.wait_for(state="attached", timeout=8_000)
             break
         except PlaywrightTimeout:
-            upload_tab = page.locator("text=上传图文 >> visible=true").first
+            continue
     if file_input.count() == 0:
-        file_input = page.locator("input[type=file]")
+        raise RuntimeError("切换到「上传图文」失败，页面上还是视频上传框")
     file_input.first.set_input_files([str(p) for p in meta["images"]])
     # 等待上传完成：标题输入框出现
     title = page.locator("input[placeholder*='标题']").first
@@ -123,6 +142,22 @@ def fill_post(page: Page, meta: dict):
         human_pause(1.2, 2.0)
         page.keyboard.press("Enter")  # 选中话题联想的第一项，使其成为真正的话题
     human_pause()
+
+
+def published_now(page: Page) -> bool:
+    return "success" in page.url or page.get_by_text("发布成功").count() > 0
+
+
+def wait_for_user_publish(page: Page) -> bool:
+    """等用户在浏览器里点发布：看到发布成功返回 True，用户直接关窗口返回 False。"""
+    while True:
+        try:
+            if published_now(page):
+                page.wait_for_timeout(2000)
+                return True
+            page.wait_for_timeout(1000)
+        except Exception:  # 浏览器窗口被关掉
+            return False
 
 
 def publish_post(post_dir: Path, account: str | None, auto: bool) -> bool:
@@ -151,22 +186,21 @@ def publish_post(post_dir: Path, account: str | None, auto: bool) -> bool:
             input("请在打开的浏览器里手动完成剩下的步骤，发完后按回车关闭...")
             ctx.close()
             return False
-        if not auto:
-            print(f"\n[{account}] 已填好《{meta['title']}》，请在浏览器里检查一遍。")
-            answer = input("确认发布吗？输入 y 按回车＝自动点发布；直接按回车＝不发布：").strip().lower()
-            if answer != "y":
-                print("已取消，没有发布。")
-                ctx.close()
-                return False
+        if auto:
+            try:
+                page.get_by_role("button", name="发布", exact=True).last.click(timeout=15_000)
+                page.wait_for_timeout(6000)
+                ok = published_now(page)
+            except PlaywrightTimeout:
+                ok = False
+        else:
+            print(f"\n[{account}] 已填好《{meta['title']}》")
+            print("👉 请在浏览器里检查，满意就点「发布」；不想发就直接关掉浏览器窗口。")
+            ok = wait_for_user_publish(page)
         try:
-            page.locator("button:has-text('发布') >> visible=true").last.click(timeout=15_000)
-            page.wait_for_timeout(6000)
-            ok = "success" in page.url or page.get_by_text("发布成功").count() > 0
-        except PlaywrightTimeout:
-            ok = False
-        if not ok:
-            input("没能确认发布成功，请看一眼浏览器：如果还没发，手动点「发布」；看完按回车关闭...")
-        ctx.close()
+            ctx.close()
+        except Exception:
+            pass
 
     if ok:
         (post_dir / "published.json").write_text(json.dumps(
@@ -174,7 +208,7 @@ def publish_post(post_dir: Path, account: str | None, auto: bool) -> bool:
             ensure_ascii=False), "utf-8")
         print(f"[{account}] 已发布: {meta['title']}")
     else:
-        print(f"[{account}] 发布状态未确认，请到创作者中心检查: {meta['title']}")
+        print(f"[{account}] 浏览器已关闭，没有检测到发布成功。如果其实已经发了，去创作者中心「笔记管理」看看：{meta['title']}")
     return ok
 
 

@@ -1,31 +1,26 @@
-# 009 · 小红书 ins 风帖子自动化
+# 小红书官网复盘帖 · 全自动
 
-流程：**网站 → 剪贴素材 → Figma 排版 → 写文案 → 多账号发布**
-完整规则见 `.claude/skills/xhs-ins-post/SKILL.md`（风格 / 文案 / 账号分配部分需要你填）。
+**你给一个网址 → 自动截图 → 自动拼图 → 自动写文案 → 自动填好小红书 → 你在浏览器里点「发布」**
 
-## 本地安装（自己电脑）
-```bash
-pip install -r requirements.txt
-playwright install chromium
+## 第一次使用（Mac）
+1. 双击 `1-安装.command`（装 Python 依赖和浏览器）
+2. 双击 `2-登录账号.command`，起个账号名，用手机小红书扫码
+3. 双击 `开始跑帖子.command`（第一次会自动安装 Claude Code，并让你登录 Claude）
+
+## 以后每次
+双击 `开始跑帖子.command`，输入：
 ```
-
-## 使用
-```bash
-# 1. 剪贴素材
-python -m xhs.clip https://example.com/xxx --name 春季新品
-
-# 2. 每个账号首次扫码登录（登录状态保存在 accounts/<账号>/，不会上传 git）
-python -m xhs.publish login 账号A
-python -m xhs.publish login 账号B
-
-# 3. 发布
-python -m xhs.publish post posts/example          # 填好后你手动点发布
-python -m xhs.publish post posts/example --auto   # 全自动
-python -m xhs.publish run                         # 按队列发布所有未发布帖子
+跑帖子 https://www.wwake.com
 ```
+等它跑完，浏览器里检查一遍，点「发布」即可。不想发就关掉浏览器窗口。
 
-## 防封建议
-- 默认“半自动”：脚本填好内容，你点发布，最安全
-- 同一账号每天 1–3 篇，队列默认间隔 20–60 分钟
-- 不同账号尽量用不同网络/设备；不要发布大量重复图文
-- 小红书页面改版后选择器可能失效，报错时把报错发我修
+- `跑帖子 网址`：我们做的项目，第一人称复盘
+- `拆解 网址`：别人的网站，第三人称分析
+
+## 文件说明
+- `xhs/shoot.py` 自动找关键页面，截电脑版+手机版
+- `xhs/mockup.py` 拼成 3:4 白底「电脑+手机」展示图
+- `xhs/publish.py` 打开小红书，上传图片、填标题正文话题
+- `.claude/skills/xhs-ins-post/SKILL.md` 完整流程和文案规则（想改写作风格就改这里）
+
+`accounts/`（登录状态）、`materials/`（素材）、`posts/`（帖子）只存在你电脑上，不会上传 GitHub。
